@@ -70,7 +70,7 @@ class VarLenSelfAttention(nn.Module):
         if varlen_attn is None:
             raise ImportError(
                 "PyTorch varlen attention is unavailable. Install a PyTorch build exposing "
-                "`torch.nn.attention.experimental.varlen_attn` or `varlen_attention`."
+                "`torch.nn.attention.varlen.varlen_attn`."
             )
 
         max_len = int(seq_lens.max().item())
@@ -89,6 +89,7 @@ class VarLenSelfAttention(nn.Module):
             k = k.repeat_interleave(repeat_factor, dim=1).contiguous()
             v = v.repeat_interleave(repeat_factor, dim=1).contiguous()
 
+        window_size = (-1, 0) if self.attention_window <= 0 else (self.attention_window, 0)
         attn_out = varlen_attn(
             q,
             k,
@@ -97,6 +98,7 @@ class VarLenSelfAttention(nn.Module):
             cu_seqlens,
             max_len,
             max_len,
+            window_size=window_size,
         )
         attn_out = attn_out.reshape(-1, self.hidden_size)
         return self.o_proj(attn_out)
