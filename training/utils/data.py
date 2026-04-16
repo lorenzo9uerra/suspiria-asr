@@ -10,8 +10,8 @@ from training.data.collator import PackedLatentCollator, SpecialTokenIds
 from training.data.dataset import MaterializedLatentDataset
 from training.data.materialize_latents import (
     _is_empty_path,
-    load_split_manifest_rows,
     materialize_latent_dataset,
+    resolve_manifest_path,
     resolve_manifest_root,
 )
 from training.utils.config import resolve_torch_dtype
@@ -41,9 +41,11 @@ def build_dataloader(
     special_tokens: SpecialTokenIds,
     materialized_root: Path,
     split: str,
+    manifest_root: Path | None = None,
 ) -> DataLoader:
     split_country = str(cfg["dataset"]["country"])
-    manifest_root = resolve_manifest_root(cfg["dataset"])
+    if manifest_root is None:
+        manifest_root = resolve_manifest_root(cfg["dataset"])
     dataset = MaterializedLatentDataset(
         manifest_root=manifest_root,
         materialized_root=materialized_root,
@@ -73,19 +75,52 @@ def build_dataloader(
     )
 
 
+def build_raw_dataloader(
+    *,
+    cfg: dict[str, Any],
+    materialized_root: Path,
+    split: str,
+    manifest_root: Path | None = None,
+) -> DataLoader:
+    split_country = str(cfg["dataset"]["country"])
+    if manifest_root is None:
+        manifest_root = resolve_manifest_root(cfg["dataset"])
+    dataset = MaterializedLatentDataset(
+        manifest_root=manifest_root,
+        materialized_root=materialized_root,
+        split=split,
+        country=split_country,
+    )
+    wer_cfg = cfg.get("wer", {})
+    return DataLoader(
+        dataset,
+        batch_size=int(wer_cfg.get("batch_size", cfg["optimization"].get("batch_size", 4))),
+        shuffle=False,
+        num_workers=int(cfg["runtime"].get("num_workers", 0)),
+        pin_memory=bool(cfg["runtime"].get("pin_memory", False)),
+        collate_fn=lambda samples: samples,
+    )
+
+
 def resolve_manifest_split(
     *,
     manifest_root: Path,
     country: str,
     split: str,
 ) -> str:
-    rows = load_split_manifest_rows(
+    manifest_path = resolve_manifest_path(
         manifest_root=manifest_root,
         country=country,
         split=split,
     )
-    if not rows:
-        raise FileNotFoundError(f"No manifest rows found for country={country!r} split={split!r}.")
+    if not manifest_path.exists():
+        raise FileNotFoundError(
+            f"Manifest not found for country={country!r} split={split!r}: {manifest_path}"
+        )
+    if manifest_path.stat().st_size == 0:
+        raise FileNotFoundError(
+            f"Manifest is empty for country={country!r} split={split!r}: {manifest_path}"
+        )
     return split
 
 

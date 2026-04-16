@@ -78,6 +78,7 @@ def main(cfg: DictConfig) -> None:
             special_tokens=special_tokens,
             materialized_root=materialized_root,
             split="train",
+            manifest_root=manifest_root,
         )
     val_loader = None
     if not test_only and "validation" in split_names:
@@ -87,6 +88,7 @@ def main(cfg: DictConfig) -> None:
             special_tokens=special_tokens,
             materialized_root=materialized_root,
             split="validation",
+            manifest_root=manifest_root,
         )
     test_loader = None
     if "test" in split_names:
@@ -96,6 +98,7 @@ def main(cfg: DictConfig) -> None:
             special_tokens=special_tokens,
             materialized_root=materialized_root,
             split="test",
+            manifest_root=manifest_root,
         )
 
     model = build_model(
