@@ -103,6 +103,51 @@ class VarLenSelfAttention(nn.Module):
         attn_out = attn_out.reshape(-1, self.hidden_size)
         return self.o_proj(attn_out)
 
+    def forward_generate_step(
+        self,
+        hidden_states: torch.Tensor,
+        *,
+        position_ids: torch.Tensor,
+        cache: dict[str, torch.Tensor] | None,
+    ) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
+        batch_size = hidden_states.shape[0]
+        q = self.q_proj(hidden_states).view(batch_size, self.num_heads, self.head_dim)
+        k = self.k_proj(hidden_states).view(batch_size, self.num_kv_heads, self.head_dim)
+        v = self.v_proj(hidden_states).view(batch_size, self.num_kv_heads, self.head_dim)
+
+        q = _apply_rope(q, position_ids, self.rope_theta)
+        k = _apply_rope(k, position_ids, self.rope_theta)
+
+        if cache is None:
+            k_cache = k.unsqueeze(1)
+            v_cache = v.unsqueeze(1)
+        else:
+            k_cache = torch.cat([cache["key"], k.unsqueeze(1)], dim=1)
+            v_cache = torch.cat([cache["value"], v.unsqueeze(1)], dim=1)
+
+        if self.attention_window > 0 and k_cache.shape[1] > self.attention_window:
+            k_cache = k_cache[:, -self.attention_window :].contiguous()
+            v_cache = v_cache[:, -self.attention_window :].contiguous()
+
+        attn_k = k_cache
+        attn_v = v_cache
+        if self.num_kv_heads != self.num_heads:
+            repeat_factor = self.num_heads // self.num_kv_heads
+            attn_k = attn_k.repeat_interleave(repeat_factor, dim=2)
+            attn_v = attn_v.repeat_interleave(repeat_factor, dim=2)
+
+        q = q.unsqueeze(2)
+        attn_k = attn_k.transpose(1, 2)
+        attn_v = attn_v.transpose(1, 2)
+        attn_out = F.scaled_dot_product_attention(
+            q,
+            attn_k,
+            attn_v,
+            is_causal=False,
+        )
+        attn_out = attn_out.transpose(1, 2).reshape(batch_size, self.hidden_size)
+        return self.o_proj(attn_out), {"key": k_cache, "value": v_cache}
+
 
 class DecoderLayer(nn.Module):
     def __init__(self, config: DecoderConfig) -> None:
@@ -140,6 +185,30 @@ class DecoderLayer(nn.Module):
         up = self.up_proj(ffn_input)
         hidden_states = hidden_states + self.down_proj(gate * up)
         return hidden_states
+
+    def forward_generate_step(
+        self,
+        hidden_states: torch.Tensor,
+        *,
+        position_ids: torch.Tensor,
+        time_condition: torch.Tensor,
+        cache: dict[str, torch.Tensor] | None,
+    ) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
+        attn_input = self.attn_norm(hidden_states)
+        attn_out, new_cache = self.self_attn.forward_generate_step(
+            attn_input,
+            position_ids=position_ids,
+            cache=cache,
+        )
+        hidden_states = hidden_states + attn_out
+
+        ffn_input = self.ffn_norm(hidden_states)
+        scale = self.ada_up(F.gelu(self.ada_down(time_condition)))
+        ffn_input = ffn_input * (1.0 + scale)
+        gate = F.silu(self.gate_proj(ffn_input))
+        up = self.up_proj(ffn_input)
+        hidden_states = hidden_states + self.down_proj(gate * up)
+        return hidden_states, new_cache
 
 
 class DecoderLM(nn.Module):
@@ -247,3 +316,36 @@ class DecoderLM(nn.Module):
             logits = self.lm_head(hidden_states)
         loss, unweighted_loss = self._compute_loss(logits, batch["packed_labels"])
         return {"loss": loss, "unweighted_loss": unweighted_loss, "logits": logits}
+
+    @torch.no_grad()
+    def forward_generate_step(
+        self,
+        *,
+        input_ids: torch.Tensor,
+        audio_features: torch.Tensor,
+        position_ids: torch.Tensor,
+        delay_steps: torch.Tensor,
+        kv_cache: list[dict[str, torch.Tensor] | None] | None = None,
+    ) -> tuple[torch.Tensor, list[dict[str, torch.Tensor]]]:
+        hidden_states = self.embed_tokens(input_ids) + self.audio_proj(audio_features)
+        time_condition = self._compute_time_embedding(delay_steps).to(hidden_states.dtype)
+
+        if kv_cache is None:
+            kv_cache = [None] * len(self.layers)
+        new_cache = []
+        for layer, layer_cache in zip(self.layers, kv_cache, strict=True):
+            hidden_states, next_layer_cache = layer.forward_generate_step(
+                hidden_states,
+                position_ids=position_ids,
+                time_condition=time_condition,
+                cache=layer_cache,
+            )
+            new_cache.append(next_layer_cache)
+
+        hidden_states = self.final_norm(hidden_states)
+        if self.config.tie_word_embeddings:
+            logits = F.linear(hidden_states, self.embed_tokens.weight)
+        else:
+            assert self.lm_head is not None
+            logits = self.lm_head(hidden_states)
+        return logits, new_cache
