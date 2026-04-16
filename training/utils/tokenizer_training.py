@@ -89,10 +89,7 @@ def train_bpe_tokenizer(tokenizer_cfg: dict[str, Any], dataset_cfg: dict[str, An
         model_max_length=int(tokenizer_cfg.get("model_max_length", 16384)),
         clean_up_tokenization_spaces=False,
     )
-    hf_tokenizer.add_special_tokens(
-        {"additional_special_tokens": additional_special_tokens},
-        replace_additional_special_tokens=True,
-    )
+    hf_tokenizer.add_special_tokens({"additional_special_tokens": additional_special_tokens})
 
     explicit_pad_token = tokenizer_cfg.get("pad_token")
     if explicit_pad_token not in (None, "", "null", "None"):

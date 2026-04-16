@@ -35,10 +35,7 @@ def load_tokenizer(tokenizer_cfg: dict[str, Any]) -> ResolvedTokenizer:
     for token in (pad_wait, word_start):
         if token not in extra_specials:
             extra_specials.append(token)
-    tokenizer.add_special_tokens(
-        {"additional_special_tokens": extra_specials},
-        replace_additional_special_tokens=False,
-    )
+    tokenizer.add_special_tokens({"additional_special_tokens": extra_specials})
 
     resolved = ResolvedTokenizer(
         tokenizer=tokenizer,
