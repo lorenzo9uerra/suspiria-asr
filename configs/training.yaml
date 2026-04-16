@@ -73,6 +73,16 @@ evaluation:
   use_ema_for_eval: true
   compute_train_metrics: false
 
+wer:
+  enabled: false
+  batch_size: 4
+  max_batches: 4
+  # Can be a single value, e.g. 2400, or a list, e.g. [80, 800, 2400].
+  delay_ms: 2400
+  flush_steps: null
+  max_decode_steps: null
+  remove_diacritics: false
+
 wandb:
   enabled: false
   project: "suspiria-asr"

@@ -16,11 +16,12 @@ from training.utils.checkpointing import (
 from training.utils.config import resolve_device, set_random_seeds, to_plain_dict
 from training.utils.data import (
     build_dataloader,
+    build_raw_dataloader,
     discover_materialized_splits,
     ensure_materialized_dataset,
 )
 from training.data.materialize_latents import resolve_manifest_root
-from training.utils.evaluation import evaluate_loss, select_eval_model
+from training.utils.evaluation import evaluate_loss, evaluate_wer, select_eval_model
 from training.utils.metrics import (
     compute_batch_metric_counts,
     finalize_metric_counts,
@@ -37,6 +38,19 @@ except Exception:
 
 def _prefix_metrics(prefix: str, metrics: dict[str, float]) -> dict[str, float]:
     return {f"{prefix}/{key}": value for key, value in metrics.items()}
+
+
+def _wer_summary(metrics: dict[str, float]) -> str:
+    if "wer" in metrics:
+        return f" wer={metrics['wer']:.4f}"
+    values = [
+        f"{key}={value:.4f}"
+        for key, value in sorted(metrics.items())
+        if key.startswith("wer/delay_")
+    ]
+    if not values:
+        return ""
+    return " " + " ".join(values)
 
 
 @hydra.main(version_base=None, config_path="../configs", config_name="training")
@@ -65,6 +79,7 @@ def main(cfg: DictConfig) -> None:
         manifest_root=manifest_root,
         country=country,
     )
+    wer_enabled = bool(cfg.get("wer", {}).get("enabled", False))
 
     train_loader = None
     if not test_only:
@@ -81,6 +96,7 @@ def main(cfg: DictConfig) -> None:
             manifest_root=manifest_root,
         )
     val_loader = None
+    val_wer_loader = None
     if not test_only and "validation" in split_names:
         val_loader = build_dataloader(
             cfg=cfg,
@@ -90,7 +106,15 @@ def main(cfg: DictConfig) -> None:
             split="validation",
             manifest_root=manifest_root,
         )
+        if wer_enabled:
+            val_wer_loader = build_raw_dataloader(
+                cfg=cfg,
+                materialized_root=materialized_root,
+                split="validation",
+                manifest_root=manifest_root,
+            )
     test_loader = None
+    test_wer_loader = None
     if "test" in split_names:
         test_loader = build_dataloader(
             cfg=cfg,
@@ -100,6 +124,13 @@ def main(cfg: DictConfig) -> None:
             split="test",
             manifest_root=manifest_root,
         )
+        if wer_enabled:
+            test_wer_loader = build_raw_dataloader(
+                cfg=cfg,
+                materialized_root=materialized_root,
+                split="test",
+                manifest_root=manifest_root,
+            )
 
     model = build_model(
         cfg,
@@ -173,12 +204,24 @@ def main(cfg: DictConfig) -> None:
             special_tokens=special_tokens,
             max_batches=eval_max_batches,
         )
+        if wer_enabled and test_wer_loader is not None:
+            test_metrics.update(
+                evaluate_wer(
+                    eval_model,
+                    test_wer_loader,
+                    tokenizer=tokenizer,
+                    special_tokens=special_tokens,
+                    device=device,
+                    cfg=cfg,
+                )
+            )
         print(
             "[TEST] "
             f"loss={test_metrics['loss']:.4f} "
             f"unweighted_loss={test_metrics['unweighted_loss']:.4f} "
             f"perplexity={test_metrics['perplexity']:.4f} "
             f"batches={int(test_metrics['num_batches'])}"
+            f"{_wer_summary(test_metrics)}"
         )
         if wandb_enabled:
             wandb.log(_prefix_metrics("test", test_metrics), step=start_step)
@@ -276,6 +319,17 @@ def main(cfg: DictConfig) -> None:
                     special_tokens=special_tokens,
                     max_batches=eval_max_batches,
                 )
+                if wer_enabled and val_wer_loader is not None:
+                    val_metrics.update(
+                        evaluate_wer(
+                            eval_model,
+                            val_wer_loader,
+                            tokenizer=tokenizer,
+                            special_tokens=special_tokens,
+                            device=device,
+                            cfg=cfg,
+                        )
+                    )
                 print(
                     "[VAL] "
                     f"step={step} "
@@ -283,6 +337,7 @@ def main(cfg: DictConfig) -> None:
                     f"unweighted_loss={val_metrics['unweighted_loss']:.4f} "
                     f"perplexity={val_metrics['perplexity']:.4f} "
                     f"batches={int(val_metrics['num_batches'])}"
+                    f"{_wer_summary(val_metrics)}"
                 )
                 if wandb_enabled:
                     wandb.log(_prefix_metrics("val", val_metrics), step=step)
@@ -315,6 +370,17 @@ def main(cfg: DictConfig) -> None:
             special_tokens=special_tokens,
             max_batches=eval_max_batches,
         )
+        if wer_enabled and val_wer_loader is not None:
+            val_metrics.update(
+                evaluate_wer(
+                    eval_model,
+                    val_wer_loader,
+                    tokenizer=tokenizer,
+                    special_tokens=special_tokens,
+                    device=device,
+                    cfg=cfg,
+                )
+            )
         print(
             "[VAL] "
             f"final_step={step} "
@@ -322,6 +388,7 @@ def main(cfg: DictConfig) -> None:
             f"unweighted_loss={val_metrics['unweighted_loss']:.4f} "
             f"perplexity={val_metrics['perplexity']:.4f} "
             f"batches={int(val_metrics['num_batches'])}"
+            f"{_wer_summary(val_metrics)}"
         )
         if wandb_enabled:
             wandb.log(_prefix_metrics("val/final", val_metrics), step=step)
@@ -334,6 +401,17 @@ def main(cfg: DictConfig) -> None:
             special_tokens=special_tokens,
             max_batches=eval_max_batches,
         )
+        if wer_enabled and test_wer_loader is not None:
+            test_metrics.update(
+                evaluate_wer(
+                    eval_model,
+                    test_wer_loader,
+                    tokenizer=tokenizer,
+                    special_tokens=special_tokens,
+                    device=device,
+                    cfg=cfg,
+                )
+            )
         print(
             "[TEST] "
             f"final_step={step} "
@@ -341,6 +419,7 @@ def main(cfg: DictConfig) -> None:
             f"unweighted_loss={test_metrics['unweighted_loss']:.4f} "
             f"perplexity={test_metrics['perplexity']:.4f} "
             f"batches={int(test_metrics['num_batches'])}"
+            f"{_wer_summary(test_metrics)}"
         )
         if wandb_enabled:
             wandb.log(_prefix_metrics("test", test_metrics), step=step)
