@@ -88,6 +88,7 @@ def build_delayed_target_stream(
     pending_tokens: list[int] = []
     group_idx = 0
     time_step = 0
+    in_text_island = False
     min_eos_step = left_pad_steps + real_steps
     latest_group_step = max((step for step, _ in groups), default=0)
     total_group_tokens = sum(1 + len(ids) for _, ids in groups)
@@ -107,20 +108,28 @@ def build_delayed_target_stream(
 
         if time_step == 0:
             token_id = int(bos_token_id)
+            in_text_island = False
         elif pending_tokens:
             token_id = int(pending_tokens.pop(0))
+            in_text_island = True
         elif group_idx < len(groups) and groups[group_idx][0] <= time_step:
             group_tokens: list[int] = []
             while group_idx < len(groups) and groups[group_idx][0] <= time_step:
-                group_tokens.append(int(word_start_token_id))
                 group_tokens.extend(int(tok) for tok in groups[group_idx][1])
                 group_idx += 1
-            token_id = group_tokens[0]
-            pending_tokens = group_tokens[1:]
+            if in_text_island:
+                token_id = group_tokens[0]
+                pending_tokens = group_tokens[1:]
+            else:
+                token_id = int(word_start_token_id)
+                pending_tokens = group_tokens
+            in_text_island = True
         elif group_idx >= len(groups) and time_step >= min_eos_step:
             token_id = int(eos_token_id)
+            in_text_island = False
         else:
             token_id = int(pad_wait_token_id)
+            in_text_island = False
 
         targets.append(token_id)
         time_step += 1
