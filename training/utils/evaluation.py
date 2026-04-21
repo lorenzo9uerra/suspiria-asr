@@ -40,6 +40,10 @@ def evaluate_loss(
             special_tokens=special_tokens,
             loss_value=float(outputs["loss"].detach().cpu()),
             unweighted_loss_value=float(outputs["unweighted_loss"].detach().cpu()),
+            loss_sum=float(outputs["loss_sum"].detach().cpu()),
+            loss_weight_sum=float(outputs["loss_weight_sum"].detach().cpu()),
+            unweighted_loss_sum=float(outputs["unweighted_loss_sum"].detach().cpu()),
+            token_count=int(outputs["token_count"].detach().cpu()),
         )
         merge_metric_counts(counts, batch_counts)
 
@@ -47,7 +51,13 @@ def evaluate_loss(
         model.train()
 
     if counts.batch_count == 0:
-        return {"loss": float("nan"), "perplexity": float("nan"), "num_batches": 0.0}
+        return {
+            "loss": float("nan"),
+            "unweighted_loss": float("nan"),
+            "perplexity": float("nan"),
+            "num_batches": 0.0,
+            "num_tokens": 0.0,
+        }
     return finalize_metric_counts(counts)
 
 
@@ -104,10 +114,11 @@ def evaluate_wer(
     normalizer = WERNormalizer(remove_diacritics=bool(wer_cfg.get("remove_diacritics", False)))
     metrics: dict[str, float] = {}
     flush_steps_cfg = wer_cfg.get("flush_steps")
+    extra_flush_steps = int(wer_cfg.get("extra_flush_steps", 128))
 
     for delay_idx, delay_ms in enumerate(delays_ms):
         delay_steps = int(delay_ms) // step_ms
-        flush_steps = delay_steps if flush_steps_cfg in (None, "null") else int(flush_steps_cfg)
+        flush_steps = delay_steps + extra_flush_steps if flush_steps_cfg in (None, "null") else int(flush_steps_cfg)
         total_errors = 0
         total_ref_words = 0
         total_samples = 0
@@ -142,6 +153,7 @@ def evaluate_wer(
         metrics[f"wer_errors/{suffix}"] = float(total_errors)
         metrics[f"wer_ref_words/{suffix}"] = float(total_ref_words)
         metrics[f"wer_num_samples/{suffix}"] = float(total_samples)
+        metrics[f"wer_flush_steps/{suffix}"] = float(flush_steps)
 
     if len(delays_ms) == 1:
         suffix = f"delay_0_{int(delays_ms[0])}ms"
@@ -149,5 +161,6 @@ def evaluate_wer(
         metrics["wer_errors"] = metrics[f"wer_errors/{suffix}"]
         metrics["wer_ref_words"] = metrics[f"wer_ref_words/{suffix}"]
         metrics["wer_num_samples"] = metrics[f"wer_num_samples/{suffix}"]
+        metrics["wer_flush_steps"] = metrics[f"wer_flush_steps/{suffix}"]
 
     return metrics
