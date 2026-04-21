@@ -236,9 +236,10 @@ def _materialize_shard_rows(
     materialized_root: Path,
     force_rematerialize: bool,
     materialize_speaker_prefix: bool,
-    tensor_dtype: torch.dtype,
+    tensor_dtype: str | torch.dtype,
     materialization_batch_size: int,
 ) -> tuple[int, int]:
+    tensor_dtype = _resolve_materialized_dtype(tensor_dtype)
     columns = [
         "key",
         "country",
