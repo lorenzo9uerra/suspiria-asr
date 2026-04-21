@@ -29,6 +29,7 @@ def ensure_materialized_dataset(cfg: dict[str, Any]) -> Path:
             materialized_root=materialized_root,
             force_rematerialize=bool(dataset_cfg.get("force_rematerialize", False)),
             cleanup_parquet_after_materialize=bool(dataset_cfg.get("cleanup_parquet_after_materialize", False)),
+            tensor_dtype=cfg["runtime"].get("data_dtype", "bf16"),
         )
         return materialized_root
     return Path(str(latents_path)).expanduser().resolve()

@@ -152,6 +152,27 @@ def _load_tensor_from_bytes(blob: bytes) -> torch.Tensor:
     return torch.load(buffer, map_location="cpu")
 
 
+def _resolve_materialized_dtype(value: Any, *, default: torch.dtype = torch.bfloat16) -> torch.dtype:
+    if isinstance(value, torch.dtype):
+        return value
+    if value is None:
+        return default
+    normalized = str(value).strip().lower()
+    mapping = {
+        "float32": torch.float32,
+        "float": torch.float32,
+        "fp32": torch.float32,
+        "float16": torch.float16,
+        "half": torch.float16,
+        "fp16": torch.float16,
+        "bfloat16": torch.bfloat16,
+        "bf16": torch.bfloat16,
+    }
+    if normalized not in mapping:
+        raise ValueError(f"Unsupported materialized latent dtype: {value}")
+    return mapping[normalized]
+
+
 def _snapshot_country_split_latents(
     *,
     country: str,
@@ -215,6 +236,7 @@ def _materialize_shard_rows(
     materialized_root: Path,
     force_rematerialize: bool,
     materialize_speaker_prefix: bool,
+    tensor_dtype: torch.dtype,
 ) -> tuple[int, int]:
     table = pq.read_table(shard_path)
     written = 0
@@ -239,7 +261,7 @@ def _materialize_shard_rows(
             "key": key,
             "country": country,
             "split": split,
-            "projected": _load_tensor_from_bytes(record["projected_bytes"]).float(),
+            "projected": _load_tensor_from_bytes(record["projected_bytes"]).to(dtype=tensor_dtype),
             "num_frames": int(record["num_frames"]),
             "latent_shard_path": latent_shard_path,
             "latent_row_idx": int(row_idx),
@@ -248,7 +270,7 @@ def _materialize_shard_rows(
             payload["speaker_prefix_frames"] = int(record["speaker_prefix_frames"])
             payload["speaker_prefix_prequant"] = _load_tensor_from_bytes(
                 record["speaker_prefix_prequant_bytes"]
-            ).float()
+            ).to(dtype=tensor_dtype)
         torch.save(payload, sample_path)
         written += 1
 
@@ -272,6 +294,7 @@ def materialize_latent_dataset(
     materialized_root: Path,
     force_rematerialize: bool = False,
     cleanup_parquet_after_materialize: bool = False,
+    tensor_dtype: str | torch.dtype | None = None,
 ) -> None:
     country = str(dataset_cfg["country"])
     if not force_rematerialize and _materialized_country_has_samples(materialized_root, country=country):
@@ -288,6 +311,10 @@ def materialize_latent_dataset(
 
     manifest_root = resolve_manifest_root(dataset_cfg)
     materialize_speaker_prefix = bool(dataset_cfg.get("materialize_speaker_prefix", True))
+    resolved_tensor_dtype = _resolve_materialized_dtype(
+        dataset_cfg.get("materialized_dtype", tensor_dtype),
+        default=torch.bfloat16,
+    )
     materialization_num_workers = max(1, int(dataset_cfg.get("materialization_num_workers", 1)))
     available_splits = []
     for split in ("train", "validation", "test"):
@@ -307,7 +334,7 @@ def materialize_latent_dataset(
     total_shards = len(shard_map)
     print(
         f"[MATERIALIZE] country={country} parquet_files={total_shards} "
-        f"workers={materialization_num_workers}"
+        f"workers={materialization_num_workers} tensor_dtype={resolved_tensor_dtype}"
     )
 
     written = 0
@@ -319,6 +346,7 @@ def materialize_latent_dataset(
             "materialized_root": materialized_root,
             "force_rematerialize": force_rematerialize,
             "materialize_speaker_prefix": materialize_speaker_prefix,
+            "tensor_dtype": resolved_tensor_dtype,
         }
         for shard_rel_path, shard_path in shard_items
     ]

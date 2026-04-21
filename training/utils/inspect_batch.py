@@ -183,6 +183,7 @@ def build_dataset(
             materialized_root=materialized_root,
             force_rematerialize=force,
             materialize_speaker_prefix=bool(dataset_cfg.get("materialize_speaker_prefix", True)),
+            tensor_dtype=cfg["runtime"].get("data_dtype", "bf16"),
         )
         print(
             f"[INSPECT_BATCH] one-shard materialized {selected_row.latent_shard_path}: "
