@@ -6,7 +6,7 @@ import time
 from pathlib import Path
 
 import torch
-from omegaconf import DictConfig
+from omegaconf import DictConfig, OmegaConf
 
 from training.data.collator import SpecialTokenIds
 from training.tokenizer import load_tokenizer
@@ -38,6 +38,13 @@ try:
     import wandb
 except Exception:
     wandb = None
+
+
+OmegaConf.register_new_resolver(
+    "path_token",
+    lambda value: str(value).replace(".", "p").replace("-", "m"),
+    replace=True,
+)
 
 
 def _prefix_metrics(prefix: str, metrics: dict[str, float]) -> dict[str, float]:

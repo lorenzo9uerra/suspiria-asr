@@ -35,4 +35,4 @@ runtime:
 hydra:
   sweep:
     dir: out/scaling
-    subdir: ${scaling.model_name}/D_${scaling.target_tokens}/lr_${optimization.lr}/seed_${runtime.seed}
+    subdir: ${scaling.model_name}/D_${scaling.target_tokens}/lr_${path_token:${optimization.lr}}/seed_${runtime.seed}
