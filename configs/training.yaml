@@ -11,17 +11,17 @@ dataset:
   latents_path: ""
   materialized_latents_dir: "out/materialized_latents"
   force_rematerialize: false
-  cleanup_parquet_after_materialize: false
+  cleanup_parquet_after_materialize: true
   materialize_speaker_prefix: false
-  materialization_num_workers: 1
+  materialization_num_workers: 8
   materialization_batch_size: 128
   step_ms: 80
-  left_pad_steps: 32
-  delay_min_ms: 80
+  left_pad_steps: 16
+  delay_min_ms: 1200
   delay_max_ms: 2400
 
 tokenizer:
-  name: "mistralai/Mistral-7B-v0.1"
+  name: "flexitok/bpe_ita_Latn_32000_v2"
   revision: null
   use_fast: true
   bos_token: "[BOS]"
@@ -45,12 +45,13 @@ model:
   max_position_embeddings: 16384
   time_condition_dim: 32
   time_embedding_theta: 10000.0
-  tie_word_embeddings: true
+  #tied embedding gives poor results
+  tie_word_embeddings: false
   pretrained_weights_path: null
   pretrained_strict: false
 
 optimization:
-  batch_size: 4
+  batch_size: 128
   lr: 0.0003
   weight_decay: 0.01
   betas: [0.9, 0.95]
@@ -65,8 +66,8 @@ optimization:
 loss:
   bos_factor: 1.0
   eos_factor: 1.0
-  pad_wait_factor: 1.0
-  word_start_factor: 1.0
+  pad_wait_factor: 0.25
+  word_start_factor: 2.0
 
 scaling:
   enabled: false
@@ -99,7 +100,7 @@ wer:
   remove_diacritics: false
 
 wandb:
-  enabled: false
+  enabled: true
   project: "suspiria-asr"
   entity: null
   run_name: null
@@ -113,10 +114,10 @@ runtime:
   data_dtype: bf16
   model_dtype: bf16
   device: null
-  num_workers: 0
-  pin_memory: false
+  num_workers: 4
+  pin_memory: true
   output_dir: "out/training"
   checkpoint_path: null
   log_every_steps: 10
-  save_every_steps: 100
+  save_every_steps: 10000
   test_only: false
