@@ -297,8 +297,8 @@ def render_batch_report(
                 f"- seq_len: `{end - start}`",
                 f"- shown_steps: `{shown}`",
                 "",
-                "| local_step | global_idx | cu_start | cu_end | pos_id | audio | latent_idx | input_kind | input_token | label_kind | label_token |",
-                "|---:|---:|---:|---:|---:|---|---:|---|---|---|---|",
+                "| local_step | global_idx | cu_start | cu_end | pos_id | audio | latent_idx | input_token | label_token |",
+                "|---:|---:|---:|---:|---:|---|---:|---|---|",
             ]
         )
         for local_step in range(shown):
@@ -315,9 +315,7 @@ def render_batch_report(
                 f"{int(position_ids[global_idx])} | "
                 f"{region} | "
                 f"{latent_idx} | "
-                f"{token_kind(input_id, special_tokens)} | "
                 f"{render_token(input_id, tokenizer, special_tokens)} | "
-                f"{token_kind(label_id, special_tokens)} | "
                 f"{render_token(label_id, tokenizer, special_tokens)} |"
             )
         if shown < end - start:

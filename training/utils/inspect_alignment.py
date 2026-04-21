@@ -434,8 +434,8 @@ def build_report(
             "",
             "## Shifted Training Pairs",
             "",
-            "| step | ms | audio | latent_idx | input_kind | input_token | target_step | target_kind | target_token |",
-            "|---:|---:|---|---:|---|---|---:|---|---|",
+            "| step | ms | audio | latent_idx | input_token | target_step | target_token |",
+            "|---:|---:|---|---:|---|---:|---|",
         ]
     )
 
@@ -449,10 +449,8 @@ def build_report(
             f"{step * step_ms} | "
             f"{region} | "
             f"{latent_idx} | "
-            f"{token_kind(input_id, special_tokens)} | "
             f"{render_token(input_id, tokenizer, special_tokens)} | "
             f"{step + 1} | "
-            f"{token_kind(target_id, special_tokens)} | "
             f"{render_token(target_id, tokenizer, special_tokens)} |"
         )
 
