@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Any
 
 import torch
+from huggingface_hub import hf_hub_download
 from omegaconf import OmegaConf
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -14,10 +15,43 @@ if str(REPO_ROOT) not in sys.path:
 
 from training.data.alignment import build_delayed_target_stream
 from training.data.collator import SpecialTokenIds
-from training.data.dataset import MaterializedLatentDataset
-from training.data.materialize_latents import resolve_manifest_root
+from training.data.materialize_latents import (
+    _is_empty_path,
+    _materialize_shard_rows,
+    load_split_manifest_rows,
+    resolve_manifest_root,
+)
+from training.data.types import PairedManifestRow
 from training.tokenizer import load_tokenizer
 from training.utils.data import ensure_materialized_dataset
+
+
+class InspectLatentDataset:
+    def __init__(
+        self,
+        *,
+        samples: list[PairedManifestRow],
+        materialized_root: Path,
+    ) -> None:
+        self.samples = samples
+        self.materialized_root = materialized_root
+
+    def __len__(self) -> int:
+        return len(self.samples)
+
+    def __getitem__(self, index: int) -> dict[str, object]:
+        sample = self.samples[index]
+        sample_path = self.materialized_root / sample.country / sample.split / f"{sample.key}.pt"
+        payload = torch.load(sample_path, map_location="cpu")
+        projected = payload["projected"]
+        if sample.num_frames is None:
+            raise ValueError(f"Manifest row for {sample.key} is missing num_frames.")
+        return {
+            "key": sample.key,
+            "transcription": sample.transcription,
+            "timestamps": sample.timestamps,
+            "projected": projected[: sample.num_frames].contiguous(),
+        }
 
 
 def parse_args() -> argparse.Namespace:
@@ -37,6 +71,20 @@ def parse_args() -> argparse.Namespace:
         default=100,
         help="Number of samples from the selected split to aggregate target percentages over.",
     )
+    mode_group = parser.add_mutually_exclusive_group()
+    mode_group.add_argument(
+        "--one-shard",
+        dest="one_shard",
+        action="store_true",
+        default=True,
+        help="Download/materialize only the parquet shard containing the selected manifest row. This is the default.",
+    )
+    mode_group.add_argument(
+        "--full-dataset",
+        dest="one_shard",
+        action="store_false",
+        help="Use the normal full-dataset materialization path before inspecting.",
+    )
     parser.add_argument("--output-path", default=None, help="Optional path to write the Markdown report.")
     return parser.parse_args()
 
@@ -49,11 +97,104 @@ def load_cfg(config_path: str) -> dict[str, Any]:
     return plain
 
 
-def find_sample_index(dataset: MaterializedLatentDataset, key: str) -> int:
-    for idx, sample in enumerate(dataset.samples):
-        if sample.key == key:
-            return idx
-    raise KeyError(f"Sample key {key!r} not found in split.")
+def _sample_path(materialized_root: Path, row: PairedManifestRow) -> Path:
+    return materialized_root / row.country / row.split / f"{row.key}.pt"
+
+
+def _download_one_parquet_shard(
+    *,
+    dataset_cfg: dict[str, Any],
+    dataset_root: Path | None,
+    latent_shard_path: str,
+    cache_root: Path,
+) -> Path:
+    if dataset_root is not None:
+        local_path = dataset_root / latent_shard_path
+        if not local_path.exists():
+            raise FileNotFoundError(f"Local latent shard not found: {local_path}")
+        return local_path.resolve()
+
+    repo_id = dataset_cfg.get("repo_id")
+    if _is_empty_path(repo_id):
+        raise ValueError("dataset.repo_id must be set when --one-shard is used without local_dataset_root.")
+
+    cache_root.mkdir(parents=True, exist_ok=True)
+    return Path(
+        hf_hub_download(
+            repo_id=str(repo_id),
+            repo_type="dataset",
+            revision=dataset_cfg.get("revision"),
+            filename=latent_shard_path,
+            local_dir=str(cache_root),
+            local_dir_use_symlinks=False,
+        )
+    ).resolve()
+
+
+def build_inspection_dataset(
+    *,
+    cfg: dict[str, Any],
+    split: str,
+    sample_index: int,
+    sample_key: str | None,
+    one_shard: bool,
+) -> tuple[InspectLatentDataset, int]:
+    dataset_cfg = cfg["dataset"]
+    country = str(dataset_cfg["country"])
+    manifest_root = resolve_manifest_root(dataset_cfg)
+    rows = load_split_manifest_rows(
+        manifest_root=manifest_root,
+        country=country,
+        split=split,
+    )
+    if not rows:
+        raise RuntimeError(f"No manifest rows found for country={country!r} split={split!r}.")
+
+    selected_index = next((idx for idx, row in enumerate(rows) if row.key == sample_key), None) if sample_key else sample_index
+    if selected_index is None:
+        raise KeyError(f"Sample key {sample_key!r} not found in split={split!r}.")
+    if selected_index < 0 or selected_index >= len(rows):
+        raise IndexError(f"Sample index {selected_index} out of range for split={split!r} with {len(rows)} rows.")
+
+    selected_row = rows[selected_index]
+    materialized_root = Path(
+        dataset_cfg.get("materialized_latents_dir", "out/materialized_latents")
+    ).expanduser().resolve()
+
+    if one_shard:
+        local_root = dataset_cfg.get("local_dataset_root")
+        dataset_root = None if _is_empty_path(local_root) else Path(str(local_root)).expanduser().resolve()
+        parquet_cache = materialized_root / "_inspect_one_shard_cache"
+        shard_path = _download_one_parquet_shard(
+            dataset_cfg=dataset_cfg,
+            dataset_root=dataset_root,
+            latent_shard_path=selected_row.latent_shard_path,
+            cache_root=parquet_cache,
+        )
+        shard_rows = [row for row in rows if row.latent_shard_path == selected_row.latent_shard_path]
+        needs_materialization = any(not _sample_path(materialized_root, row).exists() for row in shard_rows)
+        if needs_materialization or bool(dataset_cfg.get("force_rematerialize", False)):
+            written, skipped = _materialize_shard_rows(
+                shard_path=shard_path,
+                latent_shard_path=selected_row.latent_shard_path,
+                materialized_root=materialized_root,
+                force_rematerialize=bool(dataset_cfg.get("force_rematerialize", False)),
+                materialize_speaker_prefix=bool(dataset_cfg.get("materialize_speaker_prefix", True)),
+            )
+            print(
+                f"[INSPECT] one-shard materialized {selected_row.latent_shard_path}: "
+                f"written={written} skipped={skipped}"
+            )
+        else:
+            print(f"[INSPECT] using existing materialized samples for {selected_row.latent_shard_path}")
+
+        dataset = InspectLatentDataset(samples=shard_rows, materialized_root=materialized_root)
+        remapped_index = next(idx for idx, row in enumerate(shard_rows) if row.key == selected_row.key)
+        return dataset, remapped_index
+
+    materialized_root = ensure_materialized_dataset(cfg)
+    dataset = InspectLatentDataset(samples=rows, materialized_root=materialized_root)
+    return dataset, selected_index
 
 
 def token_kind(token_id: int, special_tokens: SpecialTokenIds) -> str:
@@ -152,7 +293,7 @@ def align_sample(
 def aggregate_target_summary(
     *,
     cfg: dict[str, Any],
-    dataset: MaterializedLatentDataset,
+    dataset: InspectLatentDataset,
     tokenizer,
     special_tokens: SpecialTokenIds,
     delay_ms: int,
@@ -172,7 +313,7 @@ def aggregate_target_summary(
             special_tokens=special_tokens,
             delay_ms=delay_ms,
         )
-        for token_id in aligned.labels.tolist()[left_pad_steps:]:
+        for token_id in aligned.token_ids.tolist()[left_pad_steps:]:
             counted_steps += 1
             kind = token_kind(int(token_id), special_tokens)
             if kind in {"TEXT", "W"}:
@@ -235,12 +376,14 @@ def build_report(
         delay_ms=delay_ms,
     )
 
-    labels = aligned.labels.tolist()
-    input_ids = aligned.input_ids.tolist()
-    num_steps = len(labels)
-    shown_steps = num_steps if max_steps is None else min(num_steps, int(max_steps))
+    token_ids = aligned.token_ids.tolist()
+    input_ids = token_ids[:-1]
+    labels = token_ids[1:]
+    num_stream_steps = len(token_ids)
+    num_pairs = len(labels)
+    shown_steps = num_pairs if max_steps is None else min(num_pairs, int(max_steps))
     target_summary = summarize_targets_after_left_padding(
-        labels,
+        token_ids,
         left_pad_steps=left_pad_steps,
         special_tokens=special_tokens,
     )
@@ -255,8 +398,9 @@ def build_report(
         f"- left_pad_steps: `{left_pad_steps}`",
         f"- delay_ms: `{delay_ms}`",
         f"- delay_steps: `{delay_steps}`",
-        f"- aligned_steps: `{num_steps}`",
-        f"- shown_steps: `{shown_steps}`",
+        f"- aligned_stream_steps: `{num_stream_steps}`",
+        f"- shifted_training_pairs: `{num_pairs}`",
+        f"- shown_pairs: `{shown_steps}`",
         "",
         "## Target Summary",
         "",
@@ -288,10 +432,10 @@ def build_report(
     lines.extend(
         [
             "",
-            "## Aligned Steps",
+            "## Shifted Training Pairs",
             "",
-            "| step | ms | audio | latent_idx | input_kind | input_token | target_kind | target_token |",
-            "|---:|---:|---|---:|---|---|---|---|",
+            "| step | ms | audio | latent_idx | input_kind | input_token | target_step | target_kind | target_token |",
+            "|---:|---:|---|---:|---|---|---:|---|---|",
         ]
     )
 
@@ -307,15 +451,18 @@ def build_report(
             f"{latent_idx} | "
             f"{token_kind(input_id, special_tokens)} | "
             f"{render_token(input_id, tokenizer, special_tokens)} | "
+            f"{step + 1} | "
             f"{token_kind(target_id, special_tokens)} | "
             f"{render_token(target_id, tokenizer, special_tokens)} |"
         )
 
-    if shown_steps < num_steps:
-        lines.extend(["", f"_Truncated: {num_steps - shown_steps} additional steps not shown._"])
+    if shown_steps < num_pairs:
+        lines.extend(["", f"_Truncated: {num_pairs - shown_steps} additional shifted pairs not shown._"])
 
-    if len(aligned.input_ids) != len(aligned.labels) or len(aligned.labels) != len(aligned.audio_features):
-        raise RuntimeError("Alignment invariant failed: input_ids, labels and audio_features lengths differ.")
+    if len(aligned.token_ids) != len(aligned.audio_features):
+        raise RuntimeError("Alignment invariant failed: token_ids and audio_features lengths differ.")
+    if len(input_ids) != len(labels) or len(labels) != len(aligned.audio_features) - 1:
+        raise RuntimeError("Shifted alignment invariant failed.")
 
     return "\n".join(lines) + "\n"
 
@@ -335,16 +482,14 @@ def main() -> None:
         word_start=resolved_tokenizer.word_start_token_id,
     )
 
-    materialized_root = ensure_materialized_dataset(cfg)
-    manifest_root = resolve_manifest_root(cfg["dataset"])
-    dataset = MaterializedLatentDataset(
-        manifest_root=manifest_root,
-        materialized_root=materialized_root,
+    dataset, sample_index = build_inspection_dataset(
+        cfg=cfg,
         split=args.split,
-        country=str(cfg["dataset"]["country"]),
+        sample_index=int(args.index),
+        sample_key=args.key,
+        one_shard=bool(args.one_shard),
     )
 
-    sample_index = find_sample_index(dataset, args.key) if args.key else int(args.index)
     sample = dataset[sample_index]
     delay_ms = int(args.delay_ms if args.delay_ms is not None else cfg["dataset"].get("delay_max_ms", 2400))
     aggregate_summary = aggregate_target_summary(
