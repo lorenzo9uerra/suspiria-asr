@@ -11,7 +11,9 @@ from training.data.collator import SpecialTokenIds
 @dataclass
 class MetricCounts:
     loss_sum: float = 0.0
+    loss_weight_sum: float = 0.0
     unweighted_loss_sum: float = 0.0
+    token_count: int = 0
     batch_count: int = 0
     valid_count: int = 0
     correct_count: int = 0
@@ -95,6 +97,10 @@ def compute_batch_metric_counts(
     special_tokens: SpecialTokenIds,
     loss_value: float,
     unweighted_loss_value: float | None = None,
+    loss_sum: float | None = None,
+    loss_weight_sum: float | None = None,
+    unweighted_loss_sum: float | None = None,
+    token_count: int | None = None,
 ) -> MetricCounts:
     pred_ids = logits.argmax(dim=-1)
     top5_ids = torch.topk(logits, k=min(5, logits.shape[-1]), dim=-1).indices
@@ -114,11 +120,23 @@ def compute_batch_metric_counts(
     word_start_fp = int(((~masks["word_start"]) & valid_mask & word_start_pred).sum().item())
     word_start_fn = int((masks["word_start"] & (~word_start_pred)).sum().item())
 
+    valid_count = int(valid_mask.sum().item())
+    resolved_token_count = valid_count if token_count is None else int(token_count)
+    resolved_loss_weight_sum = 1.0 if loss_weight_sum is None else float(loss_weight_sum)
+    resolved_loss_sum = float(loss_value) * resolved_loss_weight_sum if loss_sum is None else float(loss_sum)
+    resolved_unweighted_loss_sum = (
+        float(loss_value if unweighted_loss_value is None else unweighted_loss_value) * resolved_token_count
+        if unweighted_loss_sum is None
+        else float(unweighted_loss_sum)
+    )
+
     return MetricCounts(
-        loss_sum=float(loss_value),
-        unweighted_loss_sum=float(loss_value if unweighted_loss_value is None else unweighted_loss_value),
+        loss_sum=resolved_loss_sum,
+        loss_weight_sum=resolved_loss_weight_sum,
+        unweighted_loss_sum=resolved_unweighted_loss_sum,
+        token_count=resolved_token_count,
         batch_count=1,
-        valid_count=int(valid_mask.sum().item()),
+        valid_count=valid_count,
         correct_count=int(correct.sum().item()),
         top5_correct_count=int(top5_correct.sum().item()),
         non_pad_count=int((valid_mask & (~masks["pad"])).sum().item()),
@@ -155,10 +173,10 @@ def finalize_metric_counts(counts: MetricCounts) -> dict[str, float]:
     emit_recall = _safe_div(counts.emit_tp, counts.emit_tp + counts.emit_fn)
     word_precision = _safe_div(counts.word_start_tp, counts.word_start_tp + counts.word_start_fp)
     word_recall = _safe_div(counts.word_start_tp, counts.word_start_tp + counts.word_start_fn)
-    avg_loss = _safe_div(counts.loss_sum, counts.batch_count)
-    avg_unweighted_loss = _safe_div(counts.unweighted_loss_sum, counts.batch_count)
+    avg_loss = _safe_div(counts.loss_sum, counts.loss_weight_sum)
+    avg_unweighted_loss = _safe_div(counts.unweighted_loss_sum, counts.token_count)
     try:
-        perplexity = math.exp(avg_loss) if not math.isnan(avg_loss) else float("nan")
+        perplexity = math.exp(avg_unweighted_loss) if not math.isnan(avg_unweighted_loss) else float("nan")
     except OverflowError:
         perplexity = float("inf")
     return {
@@ -166,6 +184,7 @@ def finalize_metric_counts(counts: MetricCounts) -> dict[str, float]:
         "unweighted_loss": avg_unweighted_loss,
         "perplexity": perplexity,
         "num_batches": float(counts.batch_count),
+        "num_tokens": float(counts.token_count),
         "overall/token_accuracy": _safe_div(counts.correct_count, counts.valid_count),
         "overall/top5_accuracy": _safe_div(counts.top5_correct_count, counts.valid_count),
         "overall/non_pad_accuracy": _safe_div(counts.non_pad_correct_count, counts.non_pad_count),
