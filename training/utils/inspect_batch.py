@@ -17,6 +17,7 @@ from training.data.collator import PackedLatentCollator, SpecialTokenIds
 from training.data.materialize_latents import (
     _is_empty_path,
     _materialize_shard_rows,
+    _resolve_materialized_dtype,
     load_split_manifest_rows,
     resolve_manifest_root,
 )
@@ -183,7 +184,9 @@ def build_dataset(
             materialized_root=materialized_root,
             force_rematerialize=force,
             materialize_speaker_prefix=bool(dataset_cfg.get("materialize_speaker_prefix", True)),
-            tensor_dtype=cfg["runtime"].get("data_dtype", "bf16"),
+            tensor_dtype=_resolve_materialized_dtype(
+                dataset_cfg.get("materialized_dtype", cfg["runtime"].get("data_dtype", "bf16"))
+            ),
             materialization_batch_size=int(dataset_cfg.get("materialization_batch_size", 128)),
         )
         print(
