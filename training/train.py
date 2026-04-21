@@ -273,6 +273,10 @@ def main(cfg: DictConfig) -> None:
                     special_tokens=special_tokens,
                     loss_value=float(outputs["loss"].detach().cpu()),
                     unweighted_loss_value=float(outputs["unweighted_loss"].detach().cpu()),
+                    loss_sum=float(outputs["loss_sum"].detach().cpu()),
+                    loss_weight_sum=float(outputs["loss_weight_sum"].detach().cpu()),
+                    unweighted_loss_sum=float(outputs["unweighted_loss_sum"].detach().cpu()),
+                    token_count=int(outputs["token_count"].detach().cpu()),
                 )
                 if log_window_metric_counts is None:
                     log_window_metric_counts = batch_counts
@@ -284,7 +288,7 @@ def main(cfg: DictConfig) -> None:
                 train_log = {
                     "train/loss": float(outputs["loss"].detach().cpu()),
                     "train/unweighted_loss": float(outputs["unweighted_loss"].detach().cpu()),
-                    "train/perplexity": float(torch.exp(outputs["loss"].detach().cpu()).item()),
+                    "train/perplexity": float(torch.exp(outputs["unweighted_loss"].detach().cpu()).item()),
                     "train/lr": lr,
                     "train/grad_norm": float("nan") if grad_norm is None else grad_norm,
                     "train/tokens_per_sec": float(log_window_tokens) / elapsed,

@@ -216,7 +216,7 @@ class DecoderLM(nn.Module):
         if not config.tie_word_embeddings:
             self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
 
-    def _compute_loss(self, logits: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
+    def _compute_loss(self, logits: torch.Tensor, labels: torch.Tensor) -> dict[str, torch.Tensor]:
         per_token_loss = F.cross_entropy(
             logits,
             labels,
@@ -249,11 +249,18 @@ class DecoderLM(nn.Module):
             )
 
         weighted_loss = per_token_loss * weights
-        normalizer = weights.sum()
-        return (
-            weighted_loss.sum() / normalizer,
-            per_token_loss.mean(),
-        )
+        loss_sum = weighted_loss.sum()
+        loss_weight_sum = weights.sum()
+        unweighted_loss_sum = per_token_loss.sum()
+        token_count = torch.tensor(labels.numel(), device=labels.device, dtype=per_token_loss.dtype)
+        return {
+            "loss": loss_sum / loss_weight_sum,
+            "unweighted_loss": unweighted_loss_sum / token_count,
+            "loss_sum": loss_sum,
+            "loss_weight_sum": loss_weight_sum,
+            "unweighted_loss_sum": unweighted_loss_sum,
+            "token_count": token_count,
+        }
 
     def _compute_time_embedding(self, delay_steps: torch.Tensor) -> torch.Tensor:
         device = delay_steps.device
@@ -299,8 +306,9 @@ class DecoderLM(nn.Module):
         else:
             assert self.lm_head is not None
             logits = self.lm_head(hidden_states)
-        loss, unweighted_loss = self._compute_loss(logits, batch["packed_labels"])
-        return {"loss": loss, "unweighted_loss": unweighted_loss, "logits": logits}
+        loss_outputs = self._compute_loss(logits, batch["packed_labels"])
+        loss_outputs["logits"] = logits
+        return loss_outputs
 
     @torch.no_grad()
     def forward_generate_step(
