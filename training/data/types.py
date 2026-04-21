@@ -21,7 +21,6 @@ class PairedManifestRow:
 @dataclass
 class AlignedSample:
     key: str
-    input_ids: torch.Tensor
-    labels: torch.Tensor
+    token_ids: torch.Tensor
     audio_features: torch.Tensor
     delay_steps: int

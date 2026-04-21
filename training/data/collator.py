@@ -25,7 +25,6 @@ class PackedLatentCollator:
         delay_min_ms: int,
         delay_max_ms: int,
         step_ms: int = 80,
-        ignore_index: int = -100,
         feature_dtype: torch.dtype = torch.bfloat16,
     ) -> None:
         self.tokenizer = tokenizer
@@ -34,7 +33,6 @@ class PackedLatentCollator:
         self.delay_min_ms = int(delay_min_ms)
         self.delay_max_ms = int(delay_max_ms)
         self.step_ms = int(step_ms)
-        self.ignore_index = int(ignore_index)
         self.feature_dtype = feature_dtype
 
         if self.delay_min_ms % self.step_ms != 0 or self.delay_max_ms % self.step_ms != 0:
@@ -66,7 +64,7 @@ class PackedLatentCollator:
                 )
             )
 
-        seq_lens = torch.tensor([item.labels.numel() for item in aligned], dtype=torch.long)
+        seq_lens = torch.tensor([item.token_ids.numel() - 1 for item in aligned], dtype=torch.long)
         delay_steps = torch.tensor([item.delay_steps for item in aligned], dtype=torch.long)
 
         packed_input_ids = []
@@ -76,12 +74,20 @@ class PackedLatentCollator:
         cu_seqlens = [0]
 
         for item in aligned:
-            length = int(item.labels.numel())
-            cast_audio = item.audio_features.to(dtype=self.feature_dtype)
-            packed_input_ids.append(item.input_ids)
-            packed_labels.append(item.labels)
-            packed_audio_features.append(cast_audio)
-            # RoPE positions must restart at each packed sequence boundary.
+            length = int(item.token_ids.numel() - 1)
+            if length <= 0:
+                raise ValueError(f"Aligned sample {item.key!r} is too short to shift into input/target pairs.")
+
+            input_ids = item.token_ids[:-1]
+            labels = item.token_ids[1:]
+            audio_features = item.audio_features[:-1]
+            if input_ids.numel() != labels.numel() or labels.numel() != audio_features.shape[0]:
+                raise RuntimeError(f"Shifted alignment invariant failed for sample {item.key!r}.")
+
+            packed_input_ids.append(input_ids)
+            packed_labels.append(labels)
+            packed_audio_features.append(audio_features.to(dtype=self.feature_dtype))
+            # RoPE positions restart at each packed sequence boundary.
             packed_position_ids.append(torch.arange(length, dtype=torch.long))
             cu_seqlens.append(cu_seqlens[-1] + length)
 
