@@ -38,12 +38,12 @@ class WERNormalizer:
         return text.strip()
 
 
-def _edit_distance(ref_words: list[str], hyp_words: list[str]) -> int:
-    previous = list(range(len(hyp_words) + 1))
-    for i, ref_word in enumerate(ref_words, start=1):
+def _edit_distance(ref_units: list[str], hyp_units: list[str]) -> int:
+    previous = list(range(len(hyp_units) + 1))
+    for i, ref_unit in enumerate(ref_units, start=1):
         current = [i]
-        for j, hyp_word in enumerate(hyp_words, start=1):
-            substitution = previous[j - 1] + (0 if ref_word == hyp_word else 1)
+        for j, hyp_unit in enumerate(hyp_units, start=1):
+            substitution = previous[j - 1] + (0 if ref_unit == hyp_unit else 1)
             insertion = current[j - 1] + 1
             deletion = previous[j] + 1
             current.append(min(substitution, insertion, deletion))
@@ -55,6 +55,21 @@ def wer_stats(reference: str, hypothesis: str, normalizer: WERNormalizer) -> tup
     ref_words = normalizer(reference).split()
     hyp_words = normalizer(hypothesis).split()
     return _edit_distance(ref_words, hyp_words), len(ref_words)
+
+
+def cer_stats(
+    reference: str,
+    hypothesis: str,
+    normalizer: WERNormalizer,
+    *,
+    ignore_spaces: bool,
+) -> tuple[int, int]:
+    normalized_ref = normalizer(reference)
+    normalized_hyp = normalizer(hypothesis)
+    if ignore_spaces:
+        normalized_ref = normalized_ref.replace(" ", "")
+        normalized_hyp = normalized_hyp.replace(" ", "")
+    return _edit_distance(list(normalized_ref), list(normalized_hyp)), len(normalized_ref)
 
 
 def compute_wer(total_errors: int, total_ref_words: int) -> float:
@@ -138,16 +153,72 @@ def generate_batch_greedy(
         device=device,
     )
     max_steps = int(allowed_steps.max().item())
-    if max_decode_steps is not None:
-        max_steps = min(max_steps, int(max_decode_steps))
+    if max_steps <= 0:
+        return ["" for _ in samples]
 
-    prev_tokens = torch.full((batch_size,), int(special_tokens.bos), dtype=torch.long, device=device)
+    prefix_len = 1 + int(left_pad_steps) + int(delay_steps)
+    max_steps = max(max_steps, prefix_len)
+    if max_decode_steps is not None:
+        max_steps = min(max_steps, prefix_len + int(max_decode_steps))
+    prefill_len = prefix_len
     delay_tensor = torch.full((batch_size,), int(delay_steps), dtype=torch.long, device=device)
     done = torch.zeros(batch_size, dtype=torch.bool, device=device)
     generated: list[list[int]] = [[] for _ in samples]
     kv_cache = None
+    prev_tokens = torch.full((batch_size,), int(special_tokens.bos), dtype=torch.long, device=device)
 
-    for step in range(max_steps):
+    prefix_input_ids = torch.full(
+        (batch_size, prefill_len),
+        int(special_tokens.pad_wait),
+        dtype=torch.long,
+        device=device,
+    )
+    prefix_input_ids[:, 0] = int(special_tokens.bos)
+    prefix_audio = torch.stack(
+        [
+            torch.stack(
+                [
+                    _sample_audio_at_step(
+                        sample=sample,
+                        step=step,
+                        left_pad_steps=left_pad_steps,
+                        allowed_steps=int(allowed_steps[idx].item()),
+                        feature_dim=feature_dim,
+                        dtype=data_dtype,
+                    )
+                    for step in range(prefill_len)
+                ],
+                dim=0,
+            )
+            for idx, sample in enumerate(samples)
+        ],
+        dim=0,
+    ).to(device)
+    prefix_position_ids = torch.arange(prefill_len, dtype=torch.long, device=device).unsqueeze(0).expand(
+        batch_size,
+        -1,
+    )
+
+    logits, kv_cache = model.forward_generate_prefill(
+        input_ids=prefix_input_ids,
+        audio_features=prefix_audio,
+        position_ids=prefix_position_ids,
+        delay_steps=delay_tensor,
+    )
+    next_tokens = logits[:, -1, :].argmax(dim=-1)
+    first_prediction_step = prefill_len - 1
+    first_active = first_prediction_step < allowed_steps
+    if prefill_len == prefix_len:
+        for idx in range(batch_size):
+            if not bool(first_active[idx].item()):
+                continue
+            token_id = int(next_tokens[idx].item())
+            generated[idx].append(token_id)
+            prev_tokens[idx] = token_id
+            if token_id == special_tokens.eos:
+                done[idx] = True
+
+    for step in range(prefix_len, max_steps):
         within_budget = torch.arange(batch_size, device=device) >= 0
         within_budget &= step < allowed_steps
         active = within_budget & (~done)

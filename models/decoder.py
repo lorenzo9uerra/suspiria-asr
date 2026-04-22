@@ -141,6 +141,51 @@ class VarLenSelfAttention(nn.Module):
         attn_out = attn_out.transpose(1, 2).reshape(batch_size, self.hidden_size)
         return self.o_proj(attn_out), {"key": k_cache, "value": v_cache}
 
+    def forward_generate_prefill(
+        self,
+        hidden_states: torch.Tensor,
+        *,
+        position_ids: torch.Tensor,
+    ) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
+        batch_size, seq_len = hidden_states.shape[:2]
+        q = self.q_proj(hidden_states).view(batch_size, seq_len, self.num_heads, self.head_dim)
+        k = self.k_proj(hidden_states).view(batch_size, seq_len, self.num_kv_heads, self.head_dim)
+        v = self.v_proj(hidden_states).view(batch_size, seq_len, self.num_kv_heads, self.head_dim)
+
+        q = _apply_rope(q.reshape(-1, self.num_heads, self.head_dim), position_ids.reshape(-1), self.rope_theta)
+        k = _apply_rope(k.reshape(-1, self.num_kv_heads, self.head_dim), position_ids.reshape(-1), self.rope_theta)
+        q = q.view(batch_size, seq_len, self.num_heads, self.head_dim).transpose(1, 2)
+        k = k.view(batch_size, seq_len, self.num_kv_heads, self.head_dim)
+        v_cache = v
+
+        attn_k = k.transpose(1, 2)
+        attn_v = v_cache.transpose(1, 2)
+        attn_mask = None
+        is_causal = True
+        if self.attention_window > 0:
+            positions = torch.arange(seq_len, device=hidden_states.device)
+            query_pos = positions[:, None]
+            key_pos = positions[None, :]
+            attn_mask = (key_pos <= query_pos) & (key_pos >= query_pos - self.attention_window + 1)
+            attn_mask = attn_mask[None, None, :, :]
+            is_causal = False
+        attn_out = F.scaled_dot_product_attention(
+            q,
+            attn_k,
+            attn_v,
+            attn_mask=attn_mask,
+            is_causal=is_causal,
+            enable_gqa=self.num_kv_heads != self.num_heads,
+        )
+        attn_out = attn_out.transpose(1, 2).reshape(batch_size, seq_len, self.hidden_size)
+
+        k_cache = k
+        if self.attention_window > 0 and k_cache.shape[1] > self.attention_window:
+            k_cache = k_cache[:, -self.attention_window :].contiguous()
+            v_cache = v_cache[:, -self.attention_window :].contiguous()
+
+        return self.o_proj(attn_out), {"key": k_cache, "value": v_cache}
+
 
 class DecoderLayer(nn.Module):
     def __init__(self, config: DecoderConfig) -> None:
@@ -197,6 +242,28 @@ class DecoderLayer(nn.Module):
 
         ffn_input = self.ffn_norm(hidden_states)
         scale = self.ada_up(F.gelu(self.ada_down(time_condition)))
+        ffn_input = ffn_input * (1.0 + scale)
+        gate = F.silu(self.gate_proj(ffn_input))
+        up = self.up_proj(ffn_input)
+        hidden_states = hidden_states + self.down_proj(gate * up)
+        return hidden_states, new_cache
+
+    def forward_generate_prefill(
+        self,
+        hidden_states: torch.Tensor,
+        *,
+        position_ids: torch.Tensor,
+        time_condition: torch.Tensor,
+    ) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
+        attn_input = self.attn_norm(hidden_states)
+        attn_out, new_cache = self.self_attn.forward_generate_prefill(
+            attn_input,
+            position_ids=position_ids,
+        )
+        hidden_states = hidden_states + attn_out
+
+        ffn_input = self.ffn_norm(hidden_states)
+        scale = self.ada_up(F.gelu(self.ada_down(time_condition))).unsqueeze(1)
         ffn_input = ffn_input * (1.0 + scale)
         gate = F.silu(self.gate_proj(ffn_input))
         up = self.up_proj(ffn_input)
@@ -303,6 +370,35 @@ class DecoderLM(nn.Module):
         loss_outputs = self._compute_loss(logits, batch["packed_labels"])
         loss_outputs["logits"] = logits
         return loss_outputs
+
+    @torch.no_grad()
+    def forward_generate_prefill(
+        self,
+        *,
+        input_ids: torch.Tensor,
+        audio_features: torch.Tensor,
+        position_ids: torch.Tensor,
+        delay_steps: torch.Tensor,
+    ) -> tuple[torch.Tensor, list[dict[str, torch.Tensor]]]:
+        hidden_states = self.embed_tokens(input_ids) + self.audio_proj(audio_features)
+        time_condition = self._compute_time_embedding(delay_steps).to(hidden_states.dtype)
+
+        new_cache = []
+        for layer in self.layers:
+            hidden_states, next_layer_cache = layer.forward_generate_prefill(
+                hidden_states,
+                position_ids=position_ids,
+                time_condition=time_condition,
+            )
+            new_cache.append(next_layer_cache)
+
+        hidden_states = self.final_norm(hidden_states)
+        if self.config.tie_word_embeddings:
+            logits = F.linear(hidden_states, self.embed_tokens.weight)
+        else:
+            assert self.lm_head is not None
+            logits = self.lm_head(hidden_states)
+        return logits, new_cache
 
     @torch.no_grad()
     def forward_generate_step(
