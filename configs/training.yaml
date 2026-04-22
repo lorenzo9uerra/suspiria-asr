@@ -98,6 +98,7 @@ wer:
   max_decode_steps: null
   remove_diacritics: false
   cer_ignore_spaces: true
+  wandb_log_prediction_batches: 0
 
 wandb:
   enabled: true

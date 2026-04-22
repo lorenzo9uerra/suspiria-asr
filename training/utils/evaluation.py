@@ -113,6 +113,7 @@ def evaluate_wer(
     max_batches = None if max_batches in (None, "null") else int(max_batches)
     max_decode_steps = wer_cfg.get("max_decode_steps")
     max_decode_steps = None if max_decode_steps in (None, "null") else int(max_decode_steps)
+    prediction_log_batches = int(wer_cfg.get("wandb_log_prediction_batches", 0))
     data_dtype = resolve_torch_dtype(
         cfg["runtime"].get("data_dtype", "bf16"),
         default=torch.bfloat16,
@@ -122,6 +123,7 @@ def evaluate_wer(
     normalizer = WERNormalizer(remove_diacritics=bool(wer_cfg.get("remove_diacritics", False)))
     cer_ignore_spaces = bool(wer_cfg.get("cer_ignore_spaces", True))
     metrics: dict[str, float] = {}
+    prediction_rows: list[dict[str, object]] = []
     flush_steps_cfg = wer_cfg.get("flush_steps")
     extra_flush_steps = int(wer_cfg.get("extra_flush_steps", 128))
 
@@ -175,6 +177,19 @@ def evaluate_wer(
                 total_char_errors += int(char_errors)
                 total_ref_chars += int(ref_chars)
                 total_samples += 1
+                if batch_idx < prediction_log_batches:
+                    prediction_rows.append(
+                        {
+                            "delay_ms": int(delay_ms),
+                            "key": str(sample["key"]),
+                            "reference": str(sample["transcription"]),
+                            "hypothesis": str(hypothesis),
+                            "wer_errors": int(errors),
+                            "wer_ref_words": int(ref_words),
+                            "cer_errors": int(char_errors),
+                            "cer_ref_chars": int(ref_chars),
+                        }
+                    )
             processed_batches = batch_idx + 1
             if processed_batches == progress_total or processed_batches == 1 or processed_batches % 10 == 0:
                 _print_wer_progress(
@@ -203,5 +218,8 @@ def evaluate_wer(
         metrics["cer_ref_chars"] = metrics[f"cer_ref_chars/{suffix}"]
         metrics["wer_num_samples"] = metrics[f"wer_num_samples/{suffix}"]
         metrics["wer_flush_steps"] = metrics[f"wer_flush_steps/{suffix}"]
+
+    if prediction_rows:
+        metrics["_wer_prediction_rows"] = prediction_rows
 
     return metrics

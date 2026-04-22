@@ -54,6 +54,35 @@ def _prefix_metrics(prefix: str, metrics: dict[str, float]) -> dict[str, float]:
     return {f"{prefix}/{key}": value for key, value in metrics.items()}
 
 
+def _log_wandb_metrics(
+    *,
+    metrics: dict[str, object],
+    prefix: str,
+    step: int,
+    wandb_enabled: bool,
+) -> None:
+    if not wandb_enabled:
+        return
+    prediction_rows = metrics.pop("_wer_prediction_rows", None)
+    log_payload = _prefix_metrics(prefix, metrics)
+    if prediction_rows:
+        columns = [
+            "delay_ms",
+            "key",
+            "reference",
+            "hypothesis",
+            "wer_errors",
+            "wer_ref_words",
+            "cer_errors",
+            "cer_ref_chars",
+        ]
+        log_payload[f"{prefix}/wer_predictions"] = wandb.Table(
+            columns=columns,
+            data=[[row.get(column) for column in columns] for row in prediction_rows],
+        )
+    wandb.log(log_payload, step=step)
+
+
 def _wer_summary(metrics: dict[str, float]) -> str:
     if "wer" in metrics:
         return f" wer={metrics['wer']:.4f}"
@@ -309,7 +338,12 @@ def main(cfg: DictConfig) -> None:
             f"{_wer_summary(test_metrics)}"
         )
         if wandb_enabled:
-            wandb.log(_prefix_metrics("test", test_metrics), step=start_step)
+            _log_wandb_metrics(
+                metrics=test_metrics,
+                prefix="test",
+                step=start_step,
+                wandb_enabled=wandb_enabled,
+            )
             wandb.finish()
         return
 
@@ -447,7 +481,12 @@ def main(cfg: DictConfig) -> None:
                     f"{_wer_summary(val_metrics)}"
                 )
                 if wandb_enabled:
-                    wandb.log(_prefix_metrics("val", val_metrics), step=step)
+                    _log_wandb_metrics(
+                        metrics=val_metrics,
+                        prefix="val",
+                        step=step,
+                        wandb_enabled=wandb_enabled,
+                    )
                 val_unweighted_loss = float(val_metrics["unweighted_loss"])
                 if val_unweighted_loss < best_val_loss:
                     best_val_loss = val_unweighted_loss
@@ -511,7 +550,12 @@ def main(cfg: DictConfig) -> None:
             best_val_tokens_seen = tokens_seen
             best_val_metrics = dict(final_val_metrics)
         if wandb_enabled:
-            wandb.log(_prefix_metrics("val/final", final_val_metrics), step=step)
+            _log_wandb_metrics(
+                metrics=final_val_metrics,
+                prefix="val/final",
+                step=step,
+                wandb_enabled=wandb_enabled,
+            )
     if test_loader is not None:
         eval_model = select_eval_model(model, ema=ema, cfg=cfg)
         final_test_metrics = evaluate_loss(
@@ -542,7 +586,12 @@ def main(cfg: DictConfig) -> None:
             f"{_wer_summary(final_test_metrics)}"
         )
         if wandb_enabled:
-            wandb.log(_prefix_metrics("test", final_test_metrics), step=step)
+            _log_wandb_metrics(
+                metrics=final_test_metrics,
+                prefix="test",
+                step=step,
+                wandb_enabled=wandb_enabled,
+            )
     if scaling_enabled:
         scaling_output_name = str(scaling_cfg.get("output_name", "output.pt"))
         output_path = Path(cfg["runtime"].get("output_dir", "out/training")).expanduser().resolve() / scaling_output_name
