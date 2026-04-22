@@ -223,12 +223,6 @@ class DecoderLM(nn.Module):
             reduction="none",
         )
         weights = torch.ones_like(per_token_loss)
-        if self.config.loss_bos_factor != 1.0:
-            weights = torch.where(
-                labels == self.config.bos_token_id,
-                weights * float(self.config.loss_bos_factor),
-                weights,
-            )
         if self.config.loss_eos_factor != 1.0:
             weights = torch.where(
                 labels == self.config.eos_token_id,

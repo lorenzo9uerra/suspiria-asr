@@ -24,7 +24,6 @@ class DecoderConfig:
     eos_token_id: int
     pad_wait_token_id: int
     word_start_token_id: int
-    loss_bos_factor: float
     loss_eos_factor: float
     loss_pad_wait_factor: float
     loss_word_start_factor: float

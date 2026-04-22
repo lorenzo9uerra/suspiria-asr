@@ -39,7 +39,6 @@ def build_model(
         eos_token_id=int(special_tokens.eos),
         pad_wait_token_id=int(special_tokens.pad_wait),
         word_start_token_id=int(special_tokens.word_start),
-        loss_bos_factor=float(loss_cfg.get("bos_factor", 1.0)),
         loss_eos_factor=float(loss_cfg.get("eos_factor", 1.0)),
         loss_pad_wait_factor=float(loss_cfg.get("pad_wait_factor", 1.0)),
         loss_word_start_factor=float(loss_cfg.get("word_start_factor", 1.0)),

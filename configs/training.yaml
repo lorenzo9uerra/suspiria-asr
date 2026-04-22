@@ -64,7 +64,6 @@ optimization:
   max_steps: 1000
 
 loss:
-  bos_factor: 1.0
   eos_factor: 1.0
   pad_wait_factor: 0.25
   word_start_factor: 2.0
