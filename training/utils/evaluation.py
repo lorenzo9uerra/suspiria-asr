@@ -15,6 +15,7 @@ from training.utils.metrics import (
 )
 from training.utils.wer import WERNormalizer, cer_stats, compute_wer, generate_batch_greedy, wer_stats
 
+
 @torch.no_grad()
 def evaluate_loss(
     model: torch.nn.Module,
@@ -84,6 +85,13 @@ def _resolve_wer_delays_ms(wer_cfg: dict[str, Any], dataset_cfg: dict[str, Any])
     return delays
 
 
+def _print_wer_progress(*, delay_ms: int, processed_batches: int, total_batches: int | None) -> None:
+    if total_batches is None:
+        print(f"[WER] delay={delay_ms}ms batches={processed_batches}")
+    else:
+        print(f"[WER] delay={delay_ms}ms batches={processed_batches}/{total_batches}")
+
+
 @torch.no_grad()
 def evaluate_wer(
     model: torch.nn.Module,
@@ -126,6 +134,15 @@ def evaluate_wer(
         total_ref_chars = 0
         total_samples = 0
 
+        try:
+            dataloader_len = len(dataloader)
+        except TypeError:
+            dataloader_len = None
+        progress_total = dataloader_len if max_batches is None else (
+            min(max_batches, dataloader_len) if dataloader_len is not None else max_batches
+        )
+
+        _print_wer_progress(delay_ms=int(delay_ms), processed_batches=0, total_batches=progress_total)
         for batch_idx, samples in enumerate(dataloader):
             if max_batches is not None and batch_idx >= max_batches:
                 break
@@ -158,6 +175,13 @@ def evaluate_wer(
                 total_char_errors += int(char_errors)
                 total_ref_chars += int(ref_chars)
                 total_samples += 1
+            processed_batches = batch_idx + 1
+            if processed_batches == progress_total or processed_batches == 1 or processed_batches % 10 == 0:
+                _print_wer_progress(
+                    delay_ms=int(delay_ms),
+                    processed_batches=processed_batches,
+                    total_batches=progress_total,
+                )
 
         suffix = f"delay_{delay_idx}_{int(delay_ms)}ms"
         metrics[f"wer/{suffix}"] = compute_wer(total_errors, total_ref_words)
