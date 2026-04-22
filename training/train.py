@@ -33,7 +33,7 @@ from training.utils.metrics import (
 from training.utils.model_builder import build_model, load_pretrained_model_weights
 from training.utils.optimization import build_optimizer_and_scheduler
 from training.utils.scaling import build_scaling_payload, save_scaling_output
-from training.utils.logging import silence_external_info_logs
+from training.utils.logging import print_model_parameter_summary, silence_external_info_logs
 
 try:
     import wandb
@@ -218,6 +218,8 @@ def main(cfg: DictConfig) -> None:
         )
         if missing or unexpected:
             print(f"[INIT] pretrained missing={missing} unexpected={unexpected}")
+
+    print_model_parameter_summary(model)
 
     optimizer_train_cfg = dict(cfg["optimization"])
     estimated_scheduler_max_steps = None
