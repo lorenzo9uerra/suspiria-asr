@@ -206,7 +206,6 @@ Run:
 python3 -m training.train
 ```
 
-
 ## 5. Export Checkpoints To Hugging Face
 
 Upload exported decoder weights:
@@ -242,9 +241,15 @@ training_checkpoint.pt
 
 Use `model.safetensors` for inference/fine-tuning initialization. Use `training_checkpoint.pt` only for exact training resume.
 
-
-## Other Dataset
+## Dataset Format
 
 The preprocessing scripts are primarily written for the EuroSpeech Hugging Face dataset layout. In particular, `preprocessing/transcribe.py` and `preprocessing/encode_latents.py` assume an audio dataset that can be loaded by split and country, with stable sample keys that can be shared across transcription and latent-encoding outputs.
 
 Other datasets can be used for training, but they must first be converted to the paired latent dataset format consumed by `training/train.py`. The training dataset must provide timestamped word metadata in the manifest and Mimi projected latents in parquet shards.
+
+## References
+
+- [Pocket TTS](https://github.com/kyutai-labs/pocket-tts): source used as reference for the Mimi VAE integration.
+- [Voxtral-Realtime](https://arxiv.org/abs/2602.11298): reference for the decoder architecture.
+- [EuroSpeech](https://huggingface.co/datasets/disco-eth/EuroSpeech): multilingual European speech dataset used in this project.
+- [Qwen3-ASR](https://github.com/QwenLM/Qwen3-ASR): used for transcription and word-level timestamps.
