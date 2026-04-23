@@ -18,8 +18,12 @@ from preprocessing.encode_latents import load_mimi_encoder
 from training.data.collator import SpecialTokenIds
 from training.tokenizer import load_tokenizer
 from training.utils.config import resolve_device
+from training.utils.logging import silence_external_info_logs
 from training.utils.model_builder import build_model
 from training.utils.wer import generate_batch_greedy
+
+
+silence_external_info_logs()
 
 
 def resolve_weight_path(path_or_hf: str | Path) -> str:
