@@ -50,13 +50,13 @@ name = "accelerate"
 version = "1.12.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "huggingface-hub", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
-    { name = "numpy", marker = "sys_platform == 'linux'" },
-    { name = "packaging", marker = "sys_platform == 'linux'" },
-    { name = "psutil", marker = "sys_platform == 'linux'" },
-    { name = "pyyaml", marker = "sys_platform == 'linux'" },
-    { name = "safetensors", marker = "sys_platform == 'linux'" },
-    { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "sys_platform == 'linux'" },
+    { name = "huggingface-hub", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "packaging", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "psutil", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pyyaml", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "safetensors", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/4a/8e/ac2a9566747a93f8be36ee08532eb0160558b07630a081a6056a9f89bf1d/accelerate-1.12.0.tar.gz", hash = "sha256:70988c352feb481887077d2ab845125024b2a137a5090d6d7a32b57d03a45df6", size = 398399, upload-time = "2025-11-21T11:27:46.973Z" }
 wheels = [
@@ -228,14 +228,14 @@ name = "anthropic"
 version = "0.71.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "anyio", marker = "sys_platform == 'linux'" },
-    { name = "distro", marker = "sys_platform == 'linux'" },
-    { name = "docstring-parser", marker = "sys_platform == 'linux'" },
-    { name = "httpx", marker = "sys_platform == 'linux'" },
-    { name = "jiter", marker = "sys_platform == 'linux'" },
-    { name = "pydantic", marker = "sys_platform == 'linux'" },
-    { name = "sniffio", marker = "sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
+    { name = "anyio", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "distro", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "docstring-parser", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "httpx", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "jiter", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "sniffio", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/82/4f/70682b068d897841f43223df82d96ec1d617435a8b759c4a2d901a50158b/anthropic-0.71.0.tar.gz", hash = "sha256:eb8e6fa86d049061b3ef26eb4cbae0174ebbff21affa6de7b3098da857d8de6a", size = 489102, upload-time = "2025-10-16T15:54:40.08Z" }
 wheels = [
@@ -267,7 +267,7 @@ name = "apache-tvm-ffi"
 version = "0.1.10"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/17/b0/5114e30faffe3279a51a5f3b45dd1b7ce09af1246b62447b45a39a374e54/apache_tvm_ffi-0.1.10.tar.gz", hash = "sha256:974c208766c304c780c17c6d405449e862f83b22c7b6b2b8c28b29d55a806ae3", size = 2691605, upload-time = "2026-04-07T19:58:51.767Z" }
 wheels = [
@@ -385,8 +385,8 @@ name = "audioread"
 version = "3.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "standard-aifc", marker = "python_full_version >= '3.13' and sys_platform == 'linux'" },
-    { name = "standard-sunau", marker = "python_full_version >= '3.13' and sys_platform == 'linux'" },
+    { name = "standard-aifc", marker = "python_full_version == '3.13.*' and sys_platform == 'linux'" },
+    { name = "standard-sunau", marker = "python_full_version == '3.13.*' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a1/4a/874ecf9b472f998130c2b5e145dcdb9f6131e84786111489103b66772143/audioread-3.1.0.tar.gz", hash = "sha256:1c4ab2f2972764c896a8ac61ac53e261c8d29f0c6ccd652f84e18f08a4cab190", size = 20082, upload-time = "2025-10-26T19:44:13.484Z" }
 wheels = [
@@ -659,7 +659,7 @@ name = "cffi"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pycparser", marker = "(implementation_name != 'PyPy' and sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (implementation_name != 'PyPy' and sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (implementation_name != 'PyPy' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (implementation_name != 'PyPy' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "pycparser", marker = "(python_full_version < '3.14' and implementation_name != 'PyPy' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (implementation_name != 'PyPy' and sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (implementation_name != 'PyPy' and sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (implementation_name != 'PyPy' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/eb/56/b1ba7935a17738ae8453301356628e8147c79dbb825bcbc73dc7401f9846/cffi-2.0.0.tar.gz", hash = "sha256:44d1b5909021139fe36001ae048dbdde8214afa20200eda0f64c068cac5d5529", size = 523588, upload-time = "2025-09-08T23:24:04.541Z" }
 wheels = [
@@ -876,10 +876,10 @@ name = "compressed-tensors"
 version = "0.13.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "loguru", marker = "sys_platform == 'linux'" },
-    { name = "pydantic", marker = "sys_platform == 'linux'" },
-    { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "sys_platform == 'linux'" },
-    { name = "transformers", version = "4.57.6", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
+    { name = "loguru", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "transformers", version = "4.57.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/fc/65/88dd1c58fb9d0ded51b5c86471b937a1525f91fad2211a6f051dc1ea822d/compressed_tensors-0.13.0.tar.gz", hash = "sha256:23893824d3498ea3f1a829f14a8fa85f9a5e76a34c711a038b8d7c619ca9a67c", size = 200995, upload-time = "2025-12-16T16:03:55.397Z" }
 wheels = [
@@ -891,7 +891,7 @@ name = "cryptography"
 version = "46.0.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "platform_python_implementation != 'PyPy' and sys_platform == 'linux'" },
+    { name = "cffi", marker = "python_full_version < '3.14' and platform_python_implementation != 'PyPy' and sys_platform == 'linux'" },
     { name = "typing-extensions", marker = "python_full_version < '3.11' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/47/93/ac8f3d5ff04d54bc814e961a43ae5b0b146154c89c61b47bb07557679b18/cryptography-46.0.7.tar.gz", hash = "sha256:e4cfd68c5f3e0bfdad0d38e023239b96a2fe84146481852dffbcca442c245aa5", size = 750652, upload-time = "2026-04-08T01:57:54.692Z" }
@@ -993,7 +993,7 @@ resolution-markers = [
     "python_full_version < '3.11' and sys_platform == 'linux'",
 ]
 dependencies = [
-    { name = "cuda-pathfinder", marker = "sys_platform == 'linux'" },
+    { name = "cuda-pathfinder", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/1a/fe/7351d7e586a8b4c9f89731bfe4cf0148223e8f9903ff09571f78b3fb0682/cuda_bindings-13.2.0-cp310-cp310-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:08b395f79cb89ce0cd8effff07c4a1e20101b873c256a1aeb286e8fd7bd0f556", size = 5744254, upload-time = "2026-03-11T00:12:29.798Z" },
@@ -1029,8 +1029,8 @@ name = "cuda-python"
 version = "13.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cuda-bindings", version = "13.2.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
-    { name = "cuda-pathfinder", marker = "sys_platform == 'linux'" },
+    { name = "cuda-bindings", version = "13.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "cuda-pathfinder", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/4a/da/b4dbe129f941afe1c24a09ba53521b78875626763d96414798a74763282f/cuda_python-13.2.0-py3-none-any.whl", hash = "sha256:2f092b0ec13a860115fa595411889ee939ad203450ea4f91e9461b174ea7b084", size = 8145, upload-time = "2026-03-11T13:55:19.143Z" },
@@ -1084,8 +1084,8 @@ name = "cupy-cuda12x"
 version = "14.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cuda-pathfinder", marker = "sys_platform == 'linux'" },
-    { name = "numpy", marker = "sys_platform == 'linux'" },
+    { name = "cuda-pathfinder", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ef/8f/43961a56021be9e211d359524582b10d3e618d1e821942fc19530addd0a8/cupy_cuda12x-14.0.1-cp310-cp310-manylinux2014_aarch64.whl", hash = "sha256:b42da54c9da0d5a7748e4120f13c47594d3e1fc2741b712591aa915517741096", size = 144959483, upload-time = "2026-02-20T10:22:13.493Z" },
@@ -1152,8 +1152,8 @@ dependencies = [
     { name = "filelock", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32' or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
     { name = "fsspec", extra = ["http"], marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32' or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
     { name = "httpx", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32' or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "huggingface-hub", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "huggingface-hub", version = "1.11.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "huggingface-hub", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "huggingface-hub", version = "1.11.0", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.14' and sys_platform == 'linux') or sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
     { name = "multiprocess", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32' or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
     { name = "numpy", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32' or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
     { name = "packaging", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32' or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
@@ -1185,8 +1185,8 @@ name = "depyf"
 version = "0.20.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "astor", marker = "sys_platform == 'linux'" },
-    { name = "dill", marker = "sys_platform == 'linux'" },
+    { name = "astor", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "dill", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/88/35/83fb0178212279aa0af031031905804c6de5618435d229f41ed21bb9ad2c/depyf-0.20.0.tar.gz", hash = "sha256:fb7683bd72c44f67b56029df2c47721e9a02ffa4d7b19095f1c54c4ebf797a98", size = 6168761, upload-time = "2025-10-13T12:33:38.589Z" }
 wheels = [
@@ -1243,8 +1243,8 @@ name = "dynet38"
 version = "2.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cython", marker = "sys_platform == 'linux'" },
-    { name = "numpy", marker = "sys_platform == 'linux'" },
+    { name = "cython", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9b/26/8a0c27713cdb4777eebf542a0ea527107a40c5896701d81466170589381e/dyNET38-2.2-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:a761e240fa29e09f16c22929ac5fcdaf61c36eb3bde9f25d82f24bfeaf9ce0ac", size = 3376815, upload-time = "2024-01-23T10:31:30.72Z" },
@@ -1312,8 +1312,8 @@ name = "email-validator"
 version = "2.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "dnspython", marker = "sys_platform == 'linux'" },
-    { name = "idna", marker = "sys_platform == 'linux'" },
+    { name = "dnspython", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "idna", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f5/22/900cb125c76b7aaa450ce02fd727f452243f2e91a61af068b40adba60ea9/email_validator-2.3.0.tar.gz", hash = "sha256:9fc05c37f2f6cf439ff414f8fc46d917929974a82244c20eb10231ba60c54426", size = 51238, upload-time = "2025-08-26T13:09:06.831Z" }
 wheels = [
@@ -1337,11 +1337,11 @@ name = "fastapi"
 version = "0.136.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "annotated-doc", marker = "sys_platform == 'linux'" },
-    { name = "pydantic", marker = "sys_platform == 'linux'" },
-    { name = "starlette", marker = "sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
-    { name = "typing-inspection", marker = "sys_platform == 'linux'" },
+    { name = "annotated-doc", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "starlette", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-inspection", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/4e/d9/e66315807e41e69e7f6a1b42a162dada2f249c5f06ad3f1a95f84ab336ef/fastapi-0.136.0.tar.gz", hash = "sha256:cf08e067cc66e106e102d9ba659463abfac245200752f8a5b7b1e813de4ff73e", size = 396607, upload-time = "2026-04-16T11:47:13.623Z" }
 wheels = [
@@ -1350,15 +1350,15 @@ wheels = [
 
 [package.optional-dependencies]
 standard = [
-    { name = "email-validator", marker = "sys_platform == 'linux'" },
-    { name = "fastapi-cli", extra = ["standard"], marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "fastar", marker = "sys_platform == 'linux'" },
-    { name = "httpx", marker = "sys_platform == 'linux'" },
-    { name = "jinja2", marker = "sys_platform == 'linux'" },
-    { name = "pydantic-extra-types", marker = "sys_platform == 'linux'" },
-    { name = "pydantic-settings", marker = "sys_platform == 'linux'" },
-    { name = "python-multipart", marker = "sys_platform == 'linux'" },
-    { name = "uvicorn", extra = ["standard"], marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "email-validator", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "fastapi-cli", extra = ["standard"], marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "fastar", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "httpx", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "jinja2", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic-extra-types", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic-settings", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "python-multipart", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "uvicorn", extra = ["standard"], marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 
 [[package]]
@@ -1366,10 +1366,10 @@ name = "fastapi-cli"
 version = "0.0.24"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "rich-toolkit", marker = "sys_platform == 'linux'" },
+    { name = "rich-toolkit", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
     { name = "tomli", marker = "python_full_version < '3.11' and sys_platform == 'linux'" },
-    { name = "typer", marker = "sys_platform == 'linux'" },
-    { name = "uvicorn", extra = ["standard"], marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "typer", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "uvicorn", extra = ["standard"], marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6e/58/74797ae9e4610cfa0c6b34c8309096d3b20bb29be3b8b5fbf1004d10fa5f/fastapi_cli-0.0.24.tar.gz", hash = "sha256:1afc9c9e21d7ebc8a3ca5e31790cd8d837742be7e4f8b9236e99cb3451f0de00", size = 19043, upload-time = "2026-02-24T10:45:10.476Z" }
 wheels = [
@@ -1378,8 +1378,8 @@ wheels = [
 
 [package.optional-dependencies]
 standard = [
-    { name = "fastapi-cloud-cli", marker = "sys_platform == 'linux'" },
-    { name = "uvicorn", extra = ["standard"], marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "fastapi-cloud-cli", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "uvicorn", extra = ["standard"], marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 
 [[package]]
@@ -1387,14 +1387,14 @@ name = "fastapi-cloud-cli"
 version = "0.17.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "fastar", marker = "sys_platform == 'linux'" },
-    { name = "httpx", marker = "sys_platform == 'linux'" },
-    { name = "pydantic", extra = ["email"], marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "rich-toolkit", marker = "sys_platform == 'linux'" },
-    { name = "rignore", marker = "sys_platform == 'linux'" },
-    { name = "sentry-sdk", marker = "sys_platform == 'linux'" },
-    { name = "typer", marker = "sys_platform == 'linux'" },
-    { name = "uvicorn", extra = ["standard"], marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "fastar", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "httpx", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic", extra = ["email"], marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "rich-toolkit", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "rignore", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "sentry-sdk", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typer", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "uvicorn", extra = ["standard"], marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/67/79/66567c39c5fab6dbebf9e40b3a3fcb0e2ec359517c87a67434c76b06e60b/fastapi_cloud_cli-0.17.0.tar.gz", hash = "sha256:2b6c241b63427023bd1e23b3251f23234aba4b05428b245a050e92db1389823c", size = 47276, upload-time = "2026-04-15T13:17:56.402Z" }
 wheels = [
@@ -1531,19 +1531,19 @@ name = "flashinfer-python"
 version = "0.5.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "apache-tvm-ffi", marker = "sys_platform == 'linux'" },
-    { name = "click", marker = "sys_platform == 'linux'" },
-    { name = "einops", marker = "sys_platform == 'linux'" },
-    { name = "ninja", marker = "sys_platform == 'linux'" },
-    { name = "numpy", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-cudnn-frontend", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-cutlass-dsl", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-ml-py", marker = "sys_platform == 'linux'" },
-    { name = "packaging", marker = "sys_platform == 'linux'" },
-    { name = "requests", marker = "sys_platform == 'linux'" },
-    { name = "tabulate", marker = "sys_platform == 'linux'" },
-    { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "sys_platform == 'linux'" },
-    { name = "tqdm", marker = "sys_platform == 'linux'" },
+    { name = "apache-tvm-ffi", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "click", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "einops", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "ninja", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-cudnn-frontend", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-cutlass-dsl", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-ml-py", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "packaging", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "requests", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "tabulate", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "tqdm", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b4/91/cca69baeff24bb3efd12c7479a026432c8717ee47193694010494c528b22/flashinfer_python-0.5.3.tar.gz", hash = "sha256:100d59b0ede47878d2808cd3a1b9039d7a952d66338bc9f68dac192ae1b2e3f1", size = 4682367, upload-time = "2025-11-20T21:22:46.976Z" }
 wheels = [
@@ -1555,12 +1555,12 @@ name = "flask"
 version = "3.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "blinker", marker = "sys_platform == 'linux'" },
-    { name = "click", marker = "sys_platform == 'linux'" },
-    { name = "itsdangerous", marker = "sys_platform == 'linux'" },
-    { name = "jinja2", marker = "sys_platform == 'linux'" },
-    { name = "markupsafe", marker = "sys_platform == 'linux'" },
-    { name = "werkzeug", marker = "sys_platform == 'linux'" },
+    { name = "blinker", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "click", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "itsdangerous", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "jinja2", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "markupsafe", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "werkzeug", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/26/00/35d85dcce6c57fdc871f3867d465d780f302a175ea360f62533f12b27e2b/flask-3.1.3.tar.gz", hash = "sha256:0ef0e52b8a9cd932855379197dd8f94047b359ca0a78695144304cb45f87c9eb", size = 759004, upload-time = "2026-02-19T05:00:57.678Z" }
 wheels = [
@@ -1707,10 +1707,10 @@ name = "gguf"
 version = "0.18.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy", marker = "sys_platform == 'linux'" },
-    { name = "pyyaml", marker = "sys_platform == 'linux'" },
-    { name = "requests", marker = "sys_platform == 'linux'" },
-    { name = "tqdm", marker = "sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pyyaml", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "requests", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "tqdm", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/3f/26/7622a41c39db9d7090225a4bf8368550e59694dcf7313b44f9a82b501209/gguf-0.18.0.tar.gz", hash = "sha256:b4659093d5d0dccdb5902a904d54b327f4052879fe5e90946ad5fce9f8018c2e", size = 107170, upload-time = "2026-02-27T15:05:39.254Z" }
 wheels = [
@@ -1746,36 +1746,35 @@ name = "gradio"
 version = "6.13.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "anyio", marker = "sys_platform == 'linux'" },
-    { name = "audioop-lts", marker = "python_full_version >= '3.13' and sys_platform == 'linux'" },
-    { name = "brotli", marker = "sys_platform == 'linux'" },
-    { name = "fastapi", marker = "sys_platform == 'linux'" },
-    { name = "gradio-client", marker = "sys_platform == 'linux'" },
-    { name = "groovy", marker = "sys_platform == 'linux'" },
-    { name = "hf-gradio", marker = "sys_platform == 'linux'" },
-    { name = "httpx", marker = "sys_platform == 'linux'" },
-    { name = "huggingface-hub", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
-    { name = "jinja2", marker = "sys_platform == 'linux'" },
-    { name = "markupsafe", marker = "sys_platform == 'linux'" },
-    { name = "numpy", marker = "sys_platform == 'linux'" },
-    { name = "orjson", marker = "sys_platform == 'linux'" },
-    { name = "packaging", marker = "sys_platform == 'linux'" },
+    { name = "anyio", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "audioop-lts", marker = "python_full_version == '3.13.*' and sys_platform == 'linux'" },
+    { name = "brotli", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "fastapi", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "gradio-client", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "groovy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "hf-gradio", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "httpx", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "huggingface-hub", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "jinja2", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "markupsafe", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "orjson", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "packaging", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
     { name = "pandas", version = "2.3.3", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "pandas", version = "3.0.0rc2", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
     { name = "pandas", version = "3.0.2", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "pillow", marker = "sys_platform == 'linux'" },
-    { name = "pydantic", marker = "sys_platform == 'linux'" },
-    { name = "pydub", marker = "sys_platform == 'linux'" },
-    { name = "python-multipart", marker = "sys_platform == 'linux'" },
-    { name = "pytz", marker = "sys_platform == 'linux'" },
-    { name = "pyyaml", marker = "sys_platform == 'linux'" },
-    { name = "safehttpx", marker = "sys_platform == 'linux'" },
-    { name = "semantic-version", marker = "sys_platform == 'linux'" },
-    { name = "starlette", marker = "sys_platform == 'linux'" },
-    { name = "tomlkit", marker = "sys_platform == 'linux'" },
-    { name = "typer", marker = "sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
-    { name = "uvicorn", marker = "sys_platform == 'linux'" },
+    { name = "pillow", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydub", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "python-multipart", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pytz", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pyyaml", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "safehttpx", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "semantic-version", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "starlette", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "tomlkit", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typer", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "uvicorn", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7d/93/022b6cae8b566424683a80c21ca04c364f9b88120f08a9ba2b93c6b7c8e3/gradio-6.13.0.tar.gz", hash = "sha256:23457dde02202d97f636a5c170967a846297e20f40c3152b41aa4c3460245e3b", size = 36016802, upload-time = "2026-04-20T23:16:10.057Z" }
 wheels = [
@@ -1787,11 +1786,11 @@ name = "gradio-client"
 version = "2.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "fsspec", marker = "sys_platform == 'linux'" },
-    { name = "httpx", marker = "sys_platform == 'linux'" },
-    { name = "huggingface-hub", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
-    { name = "packaging", marker = "sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
+    { name = "fsspec", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "httpx", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "huggingface-hub", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "packaging", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e8/e6/6b6029f5fe2ad7f1211105d530e34d991014c2cae463f9223033031cfc4f/gradio_client-2.5.0.tar.gz", hash = "sha256:4cde99bad62149595c30c90876ca2e405e3a13687ecf895474f3412cb476673d", size = 59013, upload-time = "2026-04-20T23:16:21.518Z" }
 wheels = [
@@ -1812,7 +1811,7 @@ name = "grpcio"
 version = "1.80.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b7/48/af6173dbca4454f4637a4678b67f52ca7e0c1ed7d5894d89d434fecede05/grpcio-1.80.0.tar.gz", hash = "sha256:29aca15edd0688c22ba01d7cc01cb000d72b2033f4a3c72a81a19b56fd143257", size = 12978905, upload-time = "2026-03-30T08:49:10.502Z" }
 wheels = [
@@ -1873,8 +1872,8 @@ name = "grpcio-reflection"
 version = "1.80.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "grpcio", marker = "sys_platform == 'linux'" },
-    { name = "protobuf", version = "6.33.6", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
+    { name = "grpcio", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "protobuf", version = "6.33.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c3/eb/b84590a0794ae2509cdc9896f66ae2949ac8d85a2078fe4412bb6ca1211f/grpcio_reflection-1.80.0.tar.gz", hash = "sha256:e9c76aabc4324279945b70bc76a3d41bc4f9396bffcf1cfc1011a571c2c56221", size = 19211, upload-time = "2026-03-30T08:54:36.73Z" }
 wheels = [
@@ -1895,8 +1894,8 @@ name = "hf-gradio"
 version = "0.4.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "gradio-client", marker = "sys_platform == 'linux'" },
-    { name = "typer", marker = "sys_platform == 'linux'" },
+    { name = "gradio-client", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typer", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ce/86/c9694b7cfada5780e75769e60dc161a161f4dd7fc91b61db5e3a3338bef9/hf_gradio-0.4.1.tar.gz", hash = "sha256:a017d942618f0d495a58ee4563047fa04bef614c00e0cb789a9a6d0633cffa7b", size = 6560, upload-time = "2026-04-22T14:01:32.334Z" }
 wheels = [
@@ -2020,21 +2019,20 @@ name = "huggingface-hub"
 version = "0.36.2"
 source = { registry = "https://pypi.org/simple" }
 resolution-markers = [
-    "python_full_version >= '3.14' and sys_platform == 'linux'",
     "python_full_version == '3.13.*' and sys_platform == 'linux'",
     "python_full_version == '3.12.*' and sys_platform == 'linux'",
     "python_full_version == '3.11.*' and sys_platform == 'linux'",
     "python_full_version < '3.11' and sys_platform == 'linux'",
 ]
 dependencies = [
-    { name = "filelock", marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "fsspec", marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "hf-xet", marker = "(platform_machine != 'aarch64' and platform_machine != 'amd64' and platform_machine != 'arm64' and platform_machine != 'x86_64' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (platform_machine == 'amd64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (platform_machine == 'arm64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "packaging", marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "pyyaml", marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "requests", marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "tqdm", marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "typing-extensions", marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "filelock", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "fsspec", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "hf-xet", marker = "(python_full_version < '3.14' and platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.14' and platform_machine == 'amd64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.14' and platform_machine == 'arm64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.14' and platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and platform_machine == 'aarch64' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and platform_machine == 'amd64' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and platform_machine == 'arm64' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and platform_machine == 'x86_64' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (platform_machine != 'aarch64' and platform_machine != 'amd64' and platform_machine != 'arm64' and platform_machine != 'x86_64' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "packaging", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "pyyaml", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "requests", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "tqdm", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "typing-extensions", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7c/b7/8cb61d2eece5fb05a83271da168186721c450eb74e3c31f7ef3169fa475b/huggingface_hub-0.36.2.tar.gz", hash = "sha256:1934304d2fb224f8afa3b87007d58501acfda9215b334eed53072dd5e815ff7a", size = 649782, upload-time = "2026-02-06T09:24:13.098Z" }
 wheels = [
@@ -2057,15 +2055,15 @@ resolution-markers = [
     "python_full_version < '3.11' and sys_platform == 'win32'",
 ]
 dependencies = [
-    { name = "filelock", marker = "sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "fsspec", marker = "sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "hf-xet", marker = "(platform_machine == 'AMD64' and sys_platform == 'darwin') or (platform_machine == 'aarch64' and sys_platform == 'darwin') or (platform_machine == 'amd64' and sys_platform == 'darwin') or (platform_machine == 'arm64' and sys_platform == 'darwin') or (platform_machine == 'x86_64' and sys_platform == 'darwin') or (platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'win32') or (platform_machine == 'amd64' and sys_platform == 'win32') or (platform_machine == 'arm64' and sys_platform == 'win32') or (platform_machine == 'x86_64' and sys_platform == 'win32') or (platform_machine == 'AMD64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (platform_machine == 'AMD64' and sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (platform_machine == 'amd64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (platform_machine == 'amd64' and sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (platform_machine == 'arm64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (platform_machine == 'arm64' and sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "httpx", marker = "sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "packaging", marker = "sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "pyyaml", marker = "sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "tqdm", marker = "sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "typer", marker = "sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "typing-extensions", marker = "sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "filelock", marker = "(python_full_version >= '3.14' and sys_platform == 'linux') or sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "fsspec", marker = "(python_full_version >= '3.14' and sys_platform == 'linux') or sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "hf-xet", marker = "(python_full_version >= '3.14' and platform_machine == 'AMD64' and sys_platform == 'linux') or (python_full_version >= '3.14' and platform_machine == 'aarch64' and sys_platform == 'linux') or (python_full_version >= '3.14' and platform_machine == 'amd64' and sys_platform == 'linux') or (python_full_version >= '3.14' and platform_machine == 'arm64' and sys_platform == 'linux') or (python_full_version >= '3.14' and platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine != 'AMD64' and platform_machine != 'aarch64' and platform_machine != 'amd64' and platform_machine != 'arm64' and platform_machine != 'x86_64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (platform_machine == 'AMD64' and sys_platform == 'darwin') or (platform_machine == 'aarch64' and sys_platform == 'darwin') or (platform_machine == 'amd64' and sys_platform == 'darwin') or (platform_machine == 'arm64' and sys_platform == 'darwin') or (platform_machine == 'x86_64' and sys_platform == 'darwin') or (platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'win32') or (platform_machine == 'amd64' and sys_platform == 'win32') or (platform_machine == 'arm64' and sys_platform == 'win32') or (platform_machine == 'x86_64' and sys_platform == 'win32') or (platform_machine == 'AMD64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (platform_machine == 'AMD64' and sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (platform_machine == 'amd64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (platform_machine == 'amd64' and sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (platform_machine == 'arm64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (platform_machine == 'arm64' and sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (platform_machine == 'x86_64' and sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "httpx", marker = "(python_full_version >= '3.14' and sys_platform == 'linux') or sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "packaging", marker = "(python_full_version >= '3.14' and sys_platform == 'linux') or sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "pyyaml", marker = "(python_full_version >= '3.14' and sys_platform == 'linux') or sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "tqdm", marker = "(python_full_version >= '3.14' and sys_platform == 'linux') or sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "typer", marker = "(python_full_version >= '3.14' and sys_platform == 'linux') or sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "typing-extensions", marker = "(python_full_version >= '3.14' and sys_platform == 'linux') or sys_platform == 'darwin' or sys_platform == 'win32' or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra != 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/dc/89/e7aa12d8a6b9259bed10671abb25ae6fa437c0f88a86ecbf59617bae7759/huggingface_hub-1.11.0.tar.gz", hash = "sha256:15fb3713c7f9cdff7b808a94fd91664f661ab142796bb48c9cd9493e8d166278", size = 761749, upload-time = "2026-04-16T13:07:39.73Z" }
 wheels = [
@@ -2191,7 +2189,7 @@ name = "importlib-metadata"
 version = "8.7.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "zipp", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "zipp", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f3/49/3b30cad09e7771a4982d9975a8cbf64f00d4a1ececb53297f1d9a7be1b10/importlib_metadata-8.7.1.tar.gz", hash = "sha256:49fef1ae6440c182052f407c8d34a68f72efc36db9ca90dc0113398f2fdde8bb", size = 57107, upload-time = "2025-12-21T10:00:19.278Z" }
 wheels = [
@@ -2221,7 +2219,7 @@ name = "jinja2"
 version = "3.1.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markupsafe", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "markupsafe", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/df/bf/f7da0350254c0ed7c72f3e33cef02e048281fec7ecec5f032d4aac52226b/jinja2-3.1.6.tar.gz", hash = "sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d", size = 245115, upload-time = "2025-03-05T20:05:02.478Z" }
 wheels = [
@@ -2354,10 +2352,10 @@ name = "jsonschema"
 version = "4.26.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "attrs", marker = "sys_platform == 'linux'" },
-    { name = "jsonschema-specifications", marker = "sys_platform == 'linux'" },
-    { name = "referencing", marker = "sys_platform == 'linux'" },
-    { name = "rpds-py", marker = "sys_platform == 'linux'" },
+    { name = "attrs", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "jsonschema-specifications", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "referencing", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "rpds-py", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b3/fc/e067678238fa451312d4c62bf6e6cf5ec56375422aee02f9cb5f909b3047/jsonschema-4.26.0.tar.gz", hash = "sha256:0c26707e2efad8aa1bfc5b7ce170f3fccc2e4918ff85989ba9ffa9facb2be326", size = 366583, upload-time = "2026-01-07T13:41:07.246Z" }
 wheels = [
@@ -2369,7 +2367,7 @@ name = "jsonschema-specifications"
 version = "2025.9.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "referencing", marker = "sys_platform == 'linux'" },
+    { name = "referencing", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/19/74/a633ee74eb36c44aa6d1095e7cc5569bebf04342ee146178e2d36600708b/jsonschema_specifications-2025.9.1.tar.gz", hash = "sha256:b540987f239e745613c7a9176f3edb72b832a4ac465cf02712288397832b5e8d", size = 32855, upload-time = "2025-09-08T01:34:59.186Z" }
 wheels = [
@@ -2390,7 +2388,7 @@ name = "lazy-loader"
 version = "0.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "packaging", marker = "sys_platform == 'linux'" },
+    { name = "packaging", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/49/ac/21a1f8aa3777f5658576777ea76bfb124b702c520bbe90edf4ae9915eafa/lazy_loader-0.5.tar.gz", hash = "sha256:717f9179a0dbed357012ddad50a5ad3d5e4d9a0b8712680d4e687f5e6e6ed9b3", size = 15294, upload-time = "2026-03-06T15:45:09.054Z" }
 wheels = [
@@ -2402,23 +2400,23 @@ name = "librosa"
 version = "0.11.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "audioread", marker = "sys_platform == 'linux'" },
-    { name = "decorator", marker = "sys_platform == 'linux'" },
-    { name = "joblib", marker = "sys_platform == 'linux'" },
-    { name = "lazy-loader", marker = "sys_platform == 'linux'" },
-    { name = "msgpack", marker = "sys_platform == 'linux'" },
-    { name = "numba", marker = "sys_platform == 'linux'" },
-    { name = "numpy", marker = "sys_platform == 'linux'" },
-    { name = "pooch", marker = "sys_platform == 'linux'" },
+    { name = "audioread", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "decorator", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "joblib", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "lazy-loader", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "msgpack", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numba", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pooch", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
     { name = "scikit-learn", version = "1.7.2", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "scikit-learn", version = "1.8.0", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "scikit-learn", version = "1.8.0", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
     { name = "scipy", version = "1.15.3", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "soundfile", marker = "sys_platform == 'linux'" },
-    { name = "soxr", marker = "sys_platform == 'linux'" },
-    { name = "standard-aifc", marker = "python_full_version >= '3.13' and sys_platform == 'linux'" },
-    { name = "standard-sunau", marker = "python_full_version >= '3.13' and sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
+    { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "soundfile", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "soxr", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "standard-aifc", marker = "python_full_version == '3.13.*' and sys_platform == 'linux'" },
+    { name = "standard-sunau", marker = "python_full_version == '3.13.*' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/64/36/360b5aafa0238e29758729e9486c6ed92a6f37fa403b7875e06c115cdf4a/librosa-0.11.0.tar.gz", hash = "sha256:f5ed951ca189b375bbe2e33b2abd7e040ceeee302b9bbaeeffdfddb8d0ace908", size = 327001, upload-time = "2025-03-11T15:09:54.884Z" }
 wheels = [
@@ -2473,10 +2471,10 @@ name = "lm-format-enforcer"
 version = "0.11.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "interegular", marker = "sys_platform == 'linux'" },
-    { name = "packaging", marker = "sys_platform == 'linux'" },
-    { name = "pydantic", marker = "sys_platform == 'linux'" },
-    { name = "pyyaml", marker = "sys_platform == 'linux'" },
+    { name = "interegular", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "packaging", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pyyaml", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/84/d5/41cd417ba7dfdbbcfe46cebf81fb3dfd7c591b89897560ad05bb410a465d/lm_format_enforcer-0.11.3.tar.gz", hash = "sha256:e68081c108719cce284a9bcc889709b26ffb085a1945b5eba3a12cfa96d528da", size = 40258, upload-time = "2025-08-24T19:37:47.527Z" }
 wheels = [
@@ -2594,19 +2592,19 @@ name = "mcp"
 version = "1.27.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "anyio", marker = "sys_platform == 'linux'" },
-    { name = "httpx", marker = "sys_platform == 'linux'" },
-    { name = "httpx-sse", marker = "sys_platform == 'linux'" },
-    { name = "jsonschema", marker = "sys_platform == 'linux'" },
-    { name = "pydantic", marker = "sys_platform == 'linux'" },
-    { name = "pydantic-settings", marker = "sys_platform == 'linux'" },
-    { name = "pyjwt", extra = ["crypto"], marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "python-multipart", marker = "sys_platform == 'linux'" },
-    { name = "sse-starlette", marker = "sys_platform == 'linux'" },
-    { name = "starlette", marker = "sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
-    { name = "typing-inspection", marker = "sys_platform == 'linux'" },
-    { name = "uvicorn", marker = "sys_platform == 'linux'" },
+    { name = "anyio", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "httpx", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "httpx-sse", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "jsonschema", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic-settings", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pyjwt", extra = ["crypto"], marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "python-multipart", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "sse-starlette", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "starlette", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-inspection", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "uvicorn", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/8b/eb/c0cfc62075dc6e1ec1c64d352ae09ac051d9334311ed226f1f425312848a/mcp-1.27.0.tar.gz", hash = "sha256:d3dc35a7eec0d458c1da4976a48f982097ddaab87e278c5511d5a4a56e852b83", size = 607509, upload-time = "2026-04-02T14:48:08.88Z" }
 wheels = [
@@ -2627,14 +2625,14 @@ name = "mistral-common"
 version = "1.11.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "jsonschema", marker = "sys_platform == 'linux'" },
-    { name = "numpy", marker = "sys_platform == 'linux'" },
-    { name = "pillow", marker = "sys_platform == 'linux'" },
-    { name = "pydantic", marker = "sys_platform == 'linux'" },
-    { name = "pydantic-extra-types", extra = ["pycountry"], marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "requests", marker = "sys_platform == 'linux'" },
-    { name = "tiktoken", marker = "sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
+    { name = "jsonschema", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pillow", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic-extra-types", extra = ["pycountry"], marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "requests", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "tiktoken", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/61/97/753c85b5c0a19f4331ac99e0300ac8da06d4b29b629c9cb03064b38561bd/mistral_common-1.11.0.tar.gz", hash = "sha256:439b7fa38f9c3f020154af51bdf30eb81def507643017d8ce9f798384ec47ec3", size = 6355512, upload-time = "2026-04-01T13:54:12.36Z" }
 wheels = [
@@ -2643,7 +2641,7 @@ wheels = [
 
 [package.optional-dependencies]
 image = [
-    { name = "opencv-python-headless", marker = "sys_platform == 'linux'" },
+    { name = "opencv-python-headless", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 
 [[package]]
@@ -2651,14 +2649,14 @@ name = "model-hosting-container-standards"
 version = "0.1.14"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "fastapi", marker = "sys_platform == 'linux'" },
-    { name = "httpx", marker = "sys_platform == 'linux'" },
-    { name = "jmespath", marker = "sys_platform == 'linux'" },
-    { name = "pydantic", marker = "sys_platform == 'linux'" },
-    { name = "setuptools", version = "80.10.2", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.12' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.12' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "fastapi", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "httpx", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "jmespath", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "setuptools", version = "80.10.2", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.12' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
     { name = "setuptools", version = "81.0.0", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.12' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.12' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "starlette", marker = "sys_platform == 'linux'" },
-    { name = "supervisor", marker = "sys_platform == 'linux'" },
+    { name = "starlette", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "supervisor", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c6/3d/cf5c6029648cb0a116f7b5c2f74aa155ab0c6dd723a1f204a6d7ff354526/model_hosting_container_standards-0.1.14.tar.gz", hash = "sha256:b6cf4c46d88ce6acd6e543a578bb88ffd55d1179a7c09c22e61ae1d8a567c564", size = 90386, upload-time = "2026-03-18T21:25:14.513Z" }
 wheels = [
@@ -2957,9 +2955,9 @@ name = "nagisa"
 version = "0.2.11"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "dynet38", marker = "sys_platform == 'linux'" },
-    { name = "numpy", marker = "sys_platform == 'linux'" },
-    { name = "six", marker = "sys_platform == 'linux'" },
+    { name = "dynet38", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "six", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e1/71/1cc63f4fde1c1ca491ea69b46c3c5bd6bb06f3efa8262f34b227fe25dbf5/nagisa-0.2.11.tar.gz", hash = "sha256:213e8f837c6f7391ea1f56f4fa6047612d117e3f0e9c4f6b93a3a77f78ba6e6f", size = 20930765, upload-time = "2024-01-28T17:32:49.924Z" }
 wheels = [
@@ -3075,8 +3073,8 @@ name = "numba"
 version = "0.61.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "llvmlite", marker = "sys_platform == 'linux'" },
-    { name = "numpy", marker = "sys_platform == 'linux'" },
+    { name = "llvmlite", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1c/a0/e21f57604304aa03ebb8e098429222722ad99176a4f979d34af1d1ee80da/numba-0.61.2.tar.gz", hash = "sha256:8750ee147940a6637b80ecf7f95062185ad8726c8c28a2295b8ec1160a196f7d", size = 2820615, upload-time = "2025-04-09T02:58:07.659Z" }
 wheels = [
@@ -3234,7 +3232,7 @@ name = "nvidia-cudnn-cu12"
 version = "9.10.2.21"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cublas-cu12", marker = "sys_platform == 'linux'" },
+    { name = "nvidia-cublas-cu12", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/fa/41/e79269ce215c857c935fd86bcfe91a451a584dfc27f1e068f568b9ad1ab7/nvidia_cudnn_cu12-9.10.2.21-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:c9132cc3f8958447b4910a1720036d9eff5928cc3179b0a51fb6d167c6cc87d8", size = 705026878, upload-time = "2025-06-06T21:52:51.348Z" },
@@ -3269,7 +3267,7 @@ name = "nvidia-cufft-cu12"
 version = "11.3.0.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform == 'linux'" },
+    { name = "nvidia-nvjitlink-cu12", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/1f/37/c50d2b2f2c07e146776389e3080f4faf70bcc4fa6e19d65bb54ca174ebc3/nvidia_cufft_cu12-11.3.0.4-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:d16079550df460376455cba121db6564089176d9bac9e4f360493ca4741b22a6", size = 200164144, upload-time = "2024-11-20T17:40:58.288Z" },
@@ -3305,9 +3303,9 @@ name = "nvidia-cusolver-cu12"
 version = "11.7.1.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cublas-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-cusparse-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform == 'linux'" },
+    { name = "nvidia-cublas-cu12", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "nvidia-cusparse-cu12", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "nvidia-nvjitlink-cu12", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/93/17/dbe1aa865e4fdc7b6d4d0dd308fdd5aaab60f939abfc0ea1954eac4fb113/nvidia_cusolver_cu12-11.7.1.2-py3-none-manylinux2014_aarch64.whl", hash = "sha256:0ce237ef60acde1efc457335a2ddadfd7610b892d94efee7b776c64bb1cac9e0", size = 157833628, upload-time = "2024-10-01T17:05:05.591Z" },
@@ -3322,7 +3320,7 @@ name = "nvidia-cusparse-cu12"
 version = "12.5.4.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform == 'linux'" },
+    { name = "nvidia-nvjitlink-cu12", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/eb/eb/6681efd0aa7df96b4f8067b3ce7246833dd36830bb4cec8896182773db7d/nvidia_cusparse_cu12-12.5.4.2-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:d25b62fb18751758fe3c93a4a08eff08effedfe4edf1c6bb5afd0890fe88f887", size = 216451147, upload-time = "2024-11-20T17:44:18.055Z" },
@@ -3347,7 +3345,7 @@ name = "nvidia-cutlass-dsl"
 version = "4.5.0.dev0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cutlass-dsl-libs-base", marker = "sys_platform == 'linux'" },
+    { name = "nvidia-cutlass-dsl-libs-base", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c6/93/d0ac04b7a963ef9cb75d3ba3dba121424b18d76bf4a23d6bacd6134459c9/nvidia_cutlass_dsl-4.5.0.dev0-py3-none-any.whl", hash = "sha256:ee81170c5f6e660147888ab84a86aa01e46b810e7c20c9e0fc5bcc8e35bbc719", size = 10234, upload-time = "2026-04-08T00:57:28.431Z" },
@@ -3358,9 +3356,9 @@ name = "nvidia-cutlass-dsl-libs-base"
 version = "4.5.0.dev0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cuda-python", marker = "sys_platform == 'linux'" },
-    { name = "numpy", marker = "sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
+    { name = "cuda-python", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/17/94/91b9354df3eab3412b12203c57a9e4adc7b69fdc12f930602bdd53d19730/nvidia_cutlass_dsl_libs_base-4.5.0.dev0-cp310-cp310-manylinux_2_28_aarch64.whl", hash = "sha256:e83fd779a603ced680f70d26c6bf2eaff43403d6837055d9a33135cf0378e2bc", size = 75496748, upload-time = "2026-04-08T00:58:48.826Z" },
@@ -3482,14 +3480,14 @@ name = "openai"
 version = "2.32.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "anyio", marker = "sys_platform == 'linux'" },
-    { name = "distro", marker = "sys_platform == 'linux'" },
-    { name = "httpx", marker = "sys_platform == 'linux'" },
-    { name = "jiter", marker = "sys_platform == 'linux'" },
-    { name = "pydantic", marker = "sys_platform == 'linux'" },
-    { name = "sniffio", marker = "sys_platform == 'linux'" },
-    { name = "tqdm", marker = "sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
+    { name = "anyio", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "distro", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "httpx", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "jiter", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "sniffio", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "tqdm", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ed/59/bdcc6b759b8c42dd73afaf5bf8f902c04b37987a5514dbc1c64dba390fef/openai-2.32.0.tar.gz", hash = "sha256:c54b27a9e4cb8d51f0dd94972ffd1a04437efeb259a9e60d8922b8bd26fe55e0", size = 693286, upload-time = "2026-04-15T22:28:19.434Z" }
 wheels = [
@@ -3501,7 +3499,7 @@ name = "openai-harmony"
 version = "0.0.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pydantic", marker = "sys_platform == 'linux'" },
+    { name = "pydantic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/3e/92/2d038d096f29179c7c9571b431f9e739f87a487121901725e23fe338dd9d/openai_harmony-0.0.8.tar.gz", hash = "sha256:6e43f98e6c242fa2de6f8ea12eab24af63fa2ed3e89c06341fb9d92632c5cbdf", size = 284777, upload-time = "2025-11-05T19:07:06.727Z" }
 wheels = [
@@ -3524,7 +3522,7 @@ name = "opencv-python-headless"
 version = "4.13.0.92"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy", marker = "sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/79/42/2310883be3b8826ac58c3f2787b9358a2d46923d61f88fedf930bc59c60c/opencv_python_headless-4.13.0.92-cp37-abi3-macosx_13_0_arm64.whl", hash = "sha256:1a7d040ac656c11b8c38677cc8cccdc149f98535089dbe5b081e80a4e5903209", size = 46247192, upload-time = "2026-02-05T07:01:35.187Z" },
@@ -3542,8 +3540,8 @@ name = "opentelemetry-api"
 version = "1.41.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "importlib-metadata", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "typing-extensions", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "importlib-metadata", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "typing-extensions", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/47/8e/3778a7e87801d994869a9396b9fc2a289e5f9be91ff54a27d41eace494b0/opentelemetry_api-1.41.0.tar.gz", hash = "sha256:9421d911326ec12dee8bc933f7839090cad7a3f13fcfb0f9e82f8174dc003c09", size = 71416, upload-time = "2026-04-09T14:38:34.544Z" }
 wheels = [
@@ -3555,9 +3553,9 @@ name = "opentelemetry-sdk"
 version = "1.41.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "opentelemetry-api", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "opentelemetry-semantic-conventions", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "typing-extensions", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "opentelemetry-api", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "opentelemetry-semantic-conventions", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "typing-extensions", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f8/0e/a586df1186f9f56b5a0879d52653effc40357b8e88fc50fe300038c3c08b/opentelemetry_sdk-1.41.0.tar.gz", hash = "sha256:7bddf3961131b318fc2d158947971a8e37e38b1cd23470cfb72b624e7cc108bd", size = 230181, upload-time = "2026-04-09T14:38:47.225Z" }
 wheels = [
@@ -3569,8 +3567,8 @@ name = "opentelemetry-semantic-conventions"
 version = "0.62b0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "opentelemetry-api", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "typing-extensions", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "opentelemetry-api", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "typing-extensions", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a3/b0/c14f723e86c049b7bf8ff431160d982519b97a7be2857ed2247377397a24/opentelemetry_semantic_conventions-0.62b0.tar.gz", hash = "sha256:cbfb3c8fc259575cf68a6e1b94083cc35adc4a6b06e8cf431efa0d62606c0097", size = 145753, upload-time = "2026-04-09T14:38:48.274Z" }
 wheels = [
@@ -4032,9 +4030,9 @@ name = "pooch"
 version = "1.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "packaging", marker = "sys_platform == 'linux'" },
-    { name = "platformdirs", marker = "sys_platform == 'linux'" },
-    { name = "requests", marker = "sys_platform == 'linux'" },
+    { name = "packaging", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "platformdirs", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "requests", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/83/43/85ef45e8b36c6a48546af7b266592dc32d7f67837a6514d111bced6d7d75/pooch-1.9.0.tar.gz", hash = "sha256:de46729579b9857ffd3e741987a2f6d5e0e03219892c167c6578c0091fb511ed", size = 61788, upload-time = "2026-01-30T19:15:09.649Z" }
 wheels = [
@@ -4055,8 +4053,8 @@ name = "prometheus-fastapi-instrumentator"
 version = "7.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "prometheus-client", marker = "sys_platform == 'linux'" },
-    { name = "starlette", marker = "sys_platform == 'linux'" },
+    { name = "prometheus-client", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "starlette", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/69/6d/24d53033cf93826aa7857699a4450c1c67e5b9c710e925b1ed2b320c04df/prometheus_fastapi_instrumentator-7.1.0.tar.gz", hash = "sha256:be7cd61eeea4e5912aeccb4261c6631b3f227d8924542d79eaf5af3f439cbe5e", size = 20220, upload-time = "2025-03-19T19:35:05.351Z" }
 wheels = [
@@ -4510,10 +4508,10 @@ name = "pydantic"
 version = "2.13.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "annotated-types", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "pydantic-core", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "typing-extensions", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "typing-inspection", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "annotated-types", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "pydantic-core", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "typing-extensions", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "typing-inspection", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d9/e4/40d09941a2cebcb20609b86a559817d5b9291c49dd6f8c87e5feffbe703a/pydantic-2.13.3.tar.gz", hash = "sha256:af09e9d1d09f4e7fe37145c1f577e1d61ceb9a41924bf0094a36506285d0a84d", size = 844068, upload-time = "2026-04-20T14:46:43.632Z" }
 wheels = [
@@ -4522,7 +4520,7 @@ wheels = [
 
 [package.optional-dependencies]
 email = [
-    { name = "email-validator", marker = "sys_platform == 'linux'" },
+    { name = "email-validator", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 
 [[package]]
@@ -4530,7 +4528,7 @@ name = "pydantic-core"
 version = "2.46.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "typing-extensions", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/2a/ef/f7abb56c49382a246fd2ce9c799691e3c3e7175ec74b14d99e798bcddb1a/pydantic_core-2.46.3.tar.gz", hash = "sha256:41c178f65b8c29807239d47e6050262eb6bf84eb695e41101e62e38df4a5bc2c", size = 471412, upload-time = "2026-04-20T14:40:56.672Z" }
 wheels = [
@@ -4646,8 +4644,8 @@ name = "pydantic-extra-types"
 version = "2.11.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pydantic", marker = "sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
+    { name = "pydantic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/66/71/dba38ee2651f84f7842206adbd2233d8bbdb59fb85e9fa14232486a8c471/pydantic_extra_types-2.11.1.tar.gz", hash = "sha256:46792d2307383859e923d8fcefa82108b1a141f8a9c0198982b3832ab5ef1049", size = 172002, upload-time = "2026-03-16T08:08:03.92Z" }
 wheels = [
@@ -4656,7 +4654,7 @@ wheels = [
 
 [package.optional-dependencies]
 pycountry = [
-    { name = "pycountry", marker = "sys_platform == 'linux'" },
+    { name = "pycountry", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 
 [[package]]
@@ -4664,9 +4662,9 @@ name = "pydantic-settings"
 version = "2.14.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pydantic", marker = "sys_platform == 'linux'" },
-    { name = "python-dotenv", marker = "sys_platform == 'linux'" },
-    { name = "typing-inspection", marker = "sys_platform == 'linux'" },
+    { name = "pydantic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "python-dotenv", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-inspection", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/98/c8345dccdc31de4228c039a98f6467a941e39558da41c1744fbe29fa5666/pydantic_settings-2.14.0.tar.gz", hash = "sha256:24285fd4b0e0c06507dd9fdfd331ee23794305352aaec8fc4eb92d4047aeb67d", size = 235709, upload-time = "2026-04-20T13:37:40.293Z" }
 wheels = [
@@ -4705,7 +4703,7 @@ wheels = [
 
 [package.optional-dependencies]
 crypto = [
-    { name = "cryptography", marker = "sys_platform == 'linux'" },
+    { name = "cryptography", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 
 [[package]]
@@ -4825,7 +4823,7 @@ name = "pyzmq"
 version = "27.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "implementation_name == 'pypy' and sys_platform == 'linux'" },
+    { name = "cffi", marker = "python_full_version < '3.14' and implementation_name == 'pypy' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/04/0b/3c9baedbdf613ecaa7aa07027780b8867f57b6293b6ee50de316c9f3222b/pyzmq-27.1.0.tar.gz", hash = "sha256:ac0765e3d44455adb6ddbf4417dcce460fc40a05978c08efdf2948072f6db540", size = 281750, upload-time = "2025-09-08T23:10:18.157Z" }
 wheels = [
@@ -4896,17 +4894,17 @@ name = "qwen-asr"
 version = "0.0.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "accelerate", marker = "sys_platform == 'linux'" },
-    { name = "flask", marker = "sys_platform == 'linux'" },
-    { name = "gradio", marker = "sys_platform == 'linux'" },
-    { name = "librosa", marker = "sys_platform == 'linux'" },
-    { name = "nagisa", marker = "sys_platform == 'linux'" },
-    { name = "pytz", marker = "sys_platform == 'linux'" },
-    { name = "qwen-omni-utils", marker = "sys_platform == 'linux'" },
-    { name = "soundfile", marker = "sys_platform == 'linux'" },
-    { name = "sox", marker = "sys_platform == 'linux'" },
-    { name = "soynlp", marker = "sys_platform == 'linux'" },
-    { name = "transformers", version = "4.57.6", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
+    { name = "accelerate", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "flask", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "gradio", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "librosa", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nagisa", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pytz", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "qwen-omni-utils", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "soundfile", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "sox", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "soynlp", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "transformers", version = "4.57.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7f/5b/56c5175d1a4d6ed8602003385570304305e4ae9c40b999d12d75a70c0561/qwen_asr-0.0.6.tar.gz", hash = "sha256:294893f2340dc2d58d1f1d1cb8ce26ac0a79f254805ab432dda2892bd5c8d13c", size = 146666, upload-time = "2026-01-30T03:24:02.697Z" }
 wheels = [
@@ -4915,7 +4913,7 @@ wheels = [
 
 [package.optional-dependencies]
 vllm = [
-    { name = "vllm", marker = "sys_platform == 'linux'" },
+    { name = "vllm", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 
 [[package]]
@@ -4923,11 +4921,11 @@ name = "qwen-omni-utils"
 version = "0.0.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "av", marker = "sys_platform == 'linux'" },
-    { name = "librosa", marker = "sys_platform == 'linux'" },
-    { name = "packaging", marker = "sys_platform == 'linux'" },
-    { name = "pillow", marker = "sys_platform == 'linux'" },
-    { name = "requests", marker = "sys_platform == 'linux'" },
+    { name = "av", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "librosa", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "packaging", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pillow", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "requests", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a2/27/81a51b10ef6d1a4f158498089530eb4307689d75adf6bd34f6632eda3099/qwen_omni_utils-0.0.9.tar.gz", hash = "sha256:c598269c7069afb4d154f8ea523972e8d8794a978fffed89cb4d87c326f97447", size = 8632, upload-time = "2026-02-10T09:45:30.538Z" }
 wheels = [
@@ -4939,14 +4937,14 @@ name = "ray"
 version = "2.55.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click", marker = "sys_platform == 'linux'" },
-    { name = "filelock", marker = "sys_platform == 'linux'" },
-    { name = "jsonschema", marker = "sys_platform == 'linux'" },
-    { name = "msgpack", marker = "sys_platform == 'linux'" },
-    { name = "packaging", marker = "sys_platform == 'linux'" },
-    { name = "protobuf", version = "6.33.6", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
-    { name = "pyyaml", marker = "sys_platform == 'linux'" },
-    { name = "requests", marker = "sys_platform == 'linux'" },
+    { name = "click", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "filelock", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "jsonschema", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "msgpack", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "packaging", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "protobuf", version = "6.33.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pyyaml", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "requests", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/7e/d0/a85097dd53aaca1a44acc4dd0b3d2c0e9233179433e2ee326e4018ab3cf7/ray-2.55.1-cp310-cp310-macosx_12_0_arm64.whl", hash = "sha256:2d5786661e192148719accc959def6cdcabd7a24cd9008005bf3d0e3c8cfd529", size = 65829601, upload-time = "2026-04-22T20:09:10.013Z" },
@@ -4971,7 +4969,7 @@ wheels = [
 
 [package.optional-dependencies]
 cgraph = [
-    { name = "cupy-cuda12x", marker = "sys_platform == 'linux'" },
+    { name = "cupy-cuda12x", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 
 [[package]]
@@ -4979,8 +4977,8 @@ name = "referencing"
 version = "0.37.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "attrs", marker = "sys_platform == 'linux'" },
-    { name = "rpds-py", marker = "sys_platform == 'linux'" },
+    { name = "attrs", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "rpds-py", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
     { name = "typing-extensions", marker = "python_full_version < '3.13' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/22/f5/df4e9027acead3ecc63e50fe1e36aca1523e1719559c499951bb4b53188f/referencing-0.37.0.tar.gz", hash = "sha256:44aefc3142c5b842538163acb373e24cce6632bd54bdb01b21ad5863489f50d8", size = 78036, upload-time = "2025-10-13T15:30:48.871Z" }
@@ -5142,9 +5140,9 @@ name = "rich-toolkit"
 version = "0.19.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click", marker = "sys_platform == 'linux'" },
-    { name = "rich", marker = "sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
+    { name = "click", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "rich", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/ba/dae9e3096651042754da419a4042bc1c75e07d615f9b15066d738838e4df/rich_toolkit-0.19.7.tar.gz", hash = "sha256:133c0915872da91d4c25d85342d5ec1dfacc69b63448af1a08a0d4b4f23ef46e", size = 195877, upload-time = "2026-02-24T16:06:20.555Z" }
 wheels = [
@@ -5395,11 +5393,36 @@ wheels = [
 ]
 
 [[package]]
+name = "ruff"
+version = "0.15.11"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e4/8d/192f3d7103816158dfd5ea50d098ef2aec19194e6cbccd4b3485bdb2eb2d/ruff-0.15.11.tar.gz", hash = "sha256:f092b21708bf0e7437ce9ada249dfe688ff9a0954fc94abab05dcea7dcd29c33", size = 4637264, upload-time = "2026-04-16T18:46:26.58Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/02/1e/6aca3427f751295ab011828e15e9bf452200ac74484f1db4be0197b8170b/ruff-0.15.11-py3-none-linux_armv6l.whl", hash = "sha256:e927cfff503135c558eb581a0c9792264aae9507904eb27809cdcff2f2c847b7", size = 10607943, upload-time = "2026-04-16T18:46:05.967Z" },
+    { url = "https://files.pythonhosted.org/packages/e7/26/1341c262e74f36d4e84f3d6f4df0ac68cd53331a66bfc5080daa17c84c0b/ruff-0.15.11-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:7a1b5b2938d8f890b76084d4fa843604d787a912541eae85fd7e233398bbb73e", size = 10988592, upload-time = "2026-04-16T18:46:00.742Z" },
+    { url = "https://files.pythonhosted.org/packages/03/71/850b1d6ffa9564fbb6740429bad53df1094082fe515c8c1e74b6d8d05f18/ruff-0.15.11-py3-none-macosx_11_0_arm64.whl", hash = "sha256:d4176f3d194afbdaee6e41b9ccb1a2c287dba8700047df474abfbe773825d1cb", size = 10338501, upload-time = "2026-04-16T18:46:03.723Z" },
+    { url = "https://files.pythonhosted.org/packages/f2/11/cc1284d3e298c45a817a6aadb6c3e1d70b45c9b36d8d9cce3387b495a03a/ruff-0.15.11-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:3b17c886fb88203ced3afe7f14e8d5ae96e9d2f4ccc0ee66aa19f2c2675a27e4", size = 10670693, upload-time = "2026-04-16T18:46:41.941Z" },
+    { url = "https://files.pythonhosted.org/packages/ce/9e/f8288b034ab72b371513c13f9a41d9ba3effac54e24bfb467b007daee2ca/ruff-0.15.11-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:49fafa220220afe7758a487b048de4c8f9f767f37dfefad46b9dd06759d003eb", size = 10416177, upload-time = "2026-04-16T18:46:21.717Z" },
+    { url = "https://files.pythonhosted.org/packages/85/71/504d79abfd3d92532ba6bbe3d1c19fada03e494332a59e37c7c2dabae427/ruff-0.15.11-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:f2ab8427e74a00d93b8bda1307b1e60970d40f304af38bccb218e056c220120d", size = 11221886, upload-time = "2026-04-16T18:46:15.086Z" },
+    { url = "https://files.pythonhosted.org/packages/43/5a/947e6ab7a5ad603d65b474be15a4cbc6d29832db5d762cd142e4e3a74164/ruff-0.15.11-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:195072c0c8e1fc8f940652073df082e37a5d9cb43b4ab1e4d0566ab8977a13b7", size = 12075183, upload-time = "2026-04-16T18:46:07.944Z" },
+    { url = "https://files.pythonhosted.org/packages/9f/a1/0b7bb6268775fdd3a0818aee8efd8f5b4e231d24dd4d528ced2534023182/ruff-0.15.11-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:a3a0996d486af3920dec930a2e7daed4847dfc12649b537a9335585ada163e9e", size = 11516575, upload-time = "2026-04-16T18:46:31.687Z" },
+    { url = "https://files.pythonhosted.org/packages/30/c3/bb5168fc4d233cc06e95f482770d0f3c87945a0cd9f614b90ea8dc2f2833/ruff-0.15.11-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:1bef2cb556d509259f1fe440bb9cd33c756222cf0a7afe90d15edf0866702431", size = 11306537, upload-time = "2026-04-16T18:46:36.988Z" },
+    { url = "https://files.pythonhosted.org/packages/e4/92/4cfae6441f3967317946f3b788136eecf093729b94d6561f963ed810c82e/ruff-0.15.11-py3-none-manylinux_2_31_riscv64.whl", hash = "sha256:030d921a836d7d4a12cf6e8d984a88b66094ccb0e0f17ddd55067c331191bf19", size = 11296813, upload-time = "2026-04-16T18:46:24.182Z" },
+    { url = "https://files.pythonhosted.org/packages/43/26/972784c5dde8313acde8ac71ba8ac65475b85db4a2352a76c9934361f9bc/ruff-0.15.11-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:0e783b599b4577788dbbb66b9addcef87e9a8832f4ce0c19e34bf55543a2f890", size = 10633136, upload-time = "2026-04-16T18:46:39.802Z" },
+    { url = "https://files.pythonhosted.org/packages/5b/53/3985a4f185020c2f367f2e08a103032e12564829742a1b417980ce1514a0/ruff-0.15.11-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:ae90592246625ba4a34349d68ec28d4400d75182b71baa196ddb9f82db025ef5", size = 10424701, upload-time = "2026-04-16T18:46:10.381Z" },
+    { url = "https://files.pythonhosted.org/packages/d3/57/bf0dfb32241b56c83bb663a826133da4bf17f682ba8c096973065f6e6a68/ruff-0.15.11-py3-none-musllinux_1_2_i686.whl", hash = "sha256:1f111d62e3c983ed20e0ca2e800f8d77433a5b1161947df99a5c2a3fb60514f0", size = 10873887, upload-time = "2026-04-16T18:46:29.157Z" },
+    { url = "https://files.pythonhosted.org/packages/02/05/e48076b2a57dc33ee8c7a957296f97c744ca891a8ffb4ffb1aaa3b3f517d/ruff-0.15.11-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:06f483d6646f59eaffba9ae30956370d3a886625f511a3108994000480621d1c", size = 11404316, upload-time = "2026-04-16T18:46:19.462Z" },
+    { url = "https://files.pythonhosted.org/packages/88/27/0195d15fe7a897cbcba0904792c4b7c9fdd958456c3a17d2ea6093716a9a/ruff-0.15.11-py3-none-win32.whl", hash = "sha256:476a2aa56b7da0b73a3ee80b6b2f0e19cce544245479adde7baa65466664d5f3", size = 10655535, upload-time = "2026-04-16T18:46:12.47Z" },
+    { url = "https://files.pythonhosted.org/packages/3a/5e/c927b325bd4c1d3620211a4b96f47864633199feed60fa936025ab27e090/ruff-0.15.11-py3-none-win_amd64.whl", hash = "sha256:8b6756d88d7e234fb0c98c91511aae3cd519d5e3ed271cae31b20f39cb2a12a3", size = 11779692, upload-time = "2026-04-16T18:46:17.268Z" },
+    { url = "https://files.pythonhosted.org/packages/63/b6/aeadee5443e49baa2facd51131159fd6301cc4ccfc1541e4df7b021c37dd/ruff-0.15.11-py3-none-win_arm64.whl", hash = "sha256:063fed18cc1bbe0ee7393957284a6fe8b588c6a406a285af3ee3f46da2391ee4", size = 11032614, upload-time = "2026-04-16T18:46:34.487Z" },
+]
+
+[[package]]
 name = "safehttpx"
 version = "0.1.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "httpx", marker = "sys_platform == 'linux'" },
+    { name = "httpx", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/89/d1/4282284d9cf1ee873607a46442da977fc3c985059315ab23610be31d5885/safehttpx-0.1.7.tar.gz", hash = "sha256:db201c0978c41eddb8bb480f3eee59dd67304fdd91646035e9d9a720049a9d23", size = 10385, upload-time = "2025-10-24T18:30:09.783Z" }
 wheels = [
@@ -5489,10 +5512,10 @@ resolution-markers = [
     "python_full_version == '3.11.*' and sys_platform == 'linux'",
 ]
 dependencies = [
-    { name = "joblib", marker = "python_full_version >= '3.11' and sys_platform == 'linux'" },
-    { name = "numpy", marker = "python_full_version >= '3.11' and sys_platform == 'linux'" },
-    { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11' and sys_platform == 'linux'" },
-    { name = "threadpoolctl", marker = "python_full_version >= '3.11' and sys_platform == 'linux'" },
+    { name = "joblib", marker = "python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "threadpoolctl", marker = "python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0e/d4/40988bf3b8e34feec1d0e6a051446b1f66225f8529b9309becaeef62b6c4/scikit_learn-1.8.0.tar.gz", hash = "sha256:9bccbb3b40e3de10351f8f5068e105d0f4083b1a65fa07b6634fbc401a6287fd", size = 7335585, upload-time = "2025-12-10T07:08:53.618Z" }
 wheels = [
@@ -5611,7 +5634,7 @@ resolution-markers = [
     "python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main' and extra != 'group-12-suspiria-asr-transcribe'",
 ]
 dependencies = [
-    { name = "numpy", marker = "(python_full_version >= '3.11' and sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (python_full_version >= '3.11' and sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (python_full_version >= '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (python_full_version >= '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "numpy", marker = "(python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.11' and sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (python_full_version >= '3.11' and sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (python_full_version >= '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (python_full_version >= '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (python_full_version < '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7a/97/5a3609c4f8d58b039179648e62dd220f89864f56f7357f5d4f45c29eb2cc/scipy-1.17.1.tar.gz", hash = "sha256:95d8e012d8cb8816c226aef832200b1d45109ed4464303e997c5b13122b297c0", size = 30573822, upload-time = "2026-02-23T00:26:24.851Z" }
 wheels = [
@@ -5755,9 +5778,9 @@ name = "sentry-sdk"
 version = "3.0.0a7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "certifi", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "opentelemetry-sdk", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "urllib3", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "certifi", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "opentelemetry-sdk", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "urllib3", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/66/a5/747ab268f2cf3f4cb50af521e1a85a959411f74cf4a2ecf47782e1981cee/sentry_sdk-3.0.0a7.tar.gz", hash = "sha256:439a858d409b84407560df6b7ebb760acd9ad3d14e05cd919ae36b204e411cb2", size = 329999, upload-time = "2025-10-20T13:50:38.131Z" }
 wheels = [
@@ -5924,8 +5947,8 @@ name = "soundfile"
 version = "0.13.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "numpy", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "cffi", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "numpy", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e1/41/9b873a8c055582859b239be17902a85339bec6a30ad162f98c9b0288a2cc/soundfile-0.13.1.tar.gz", hash = "sha256:b2c68dab1e30297317080a5b43df57e302584c49e2942defdde0acccc53f0e5b", size = 46156, upload-time = "2025-01-25T09:17:04.831Z" }
 wheels = [
@@ -5943,8 +5966,8 @@ name = "sox"
 version = "1.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy", marker = "sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/3d/a2/d8e0d8fd7abf509ead4a2cb0fb24e5758b5330166bf9223d5cb9f98a7e8d/sox-1.5.0.tar.gz", hash = "sha256:12c7be5bb1f548d891fe11e82c08cf5f1a1d74e225298f60082e5aeb2469ada0", size = 63905, upload-time = "2024-03-20T16:59:37.385Z" }
 
@@ -5953,7 +5976,7 @@ name = "soxr"
 version = "1.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy", marker = "sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/7e/f4b461944662ad75036df65277d6130f9411002bfb79e9df7dff40a31db9/soxr-1.0.0.tar.gz", hash = "sha256:e07ee6c1d659bc6957034f4800c60cb8b98de798823e34d2a2bba1caa85a4509", size = 171415, upload-time = "2025-09-07T13:22:21.317Z" }
 wheels = [
@@ -5984,12 +6007,12 @@ name = "soynlp"
 version = "0.0.493"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy", marker = "sys_platform == 'linux'" },
-    { name = "psutil", marker = "sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "psutil", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
     { name = "scikit-learn", version = "1.7.2", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "scikit-learn", version = "1.8.0", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "scikit-learn", version = "1.8.0", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
     { name = "scipy", version = "1.15.3", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7d/05/fb3f0c9248e60a0224e77198c31517b93b92d6060873b641caf474d42993/soynlp-0.0.493.tar.gz", hash = "sha256:4b20b825edbcadb9ebd494de54d8ca50b0ee317fe58d090e8b509d733422136a", size = 405393, upload-time = "2019-08-25T05:28:00.755Z" }
 wheels = [
@@ -6001,8 +6024,8 @@ name = "sse-starlette"
 version = "3.3.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "anyio", marker = "sys_platform == 'linux'" },
-    { name = "starlette", marker = "sys_platform == 'linux'" },
+    { name = "anyio", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "starlette", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/26/8c/f9290339ef6d79badbc010f067cd769d6601ec11a57d78569c683fb4dd87/sse_starlette-3.3.4.tar.gz", hash = "sha256:aaf92fc067af8a5427192895ac028e947b484ac01edbc3caf00e7e7137c7bef1", size = 32427, upload-time = "2026-03-29T09:00:23.307Z" }
 wheels = [
@@ -6014,8 +6037,8 @@ name = "standard-aifc"
 version = "3.13.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "audioop-lts", marker = "python_full_version >= '3.13' and sys_platform == 'linux'" },
-    { name = "standard-chunk", marker = "python_full_version >= '3.13' and sys_platform == 'linux'" },
+    { name = "audioop-lts", marker = "python_full_version == '3.13.*' and sys_platform == 'linux'" },
+    { name = "standard-chunk", marker = "python_full_version == '3.13.*' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c4/53/6050dc3dde1671eb3db592c13b55a8005e5040131f7509cef0215212cb84/standard_aifc-3.13.0.tar.gz", hash = "sha256:64e249c7cb4b3daf2fdba4e95721f811bde8bdfc43ad9f936589b7bb2fae2e43", size = 15240, upload-time = "2024-10-30T16:01:31.772Z" }
 wheels = [
@@ -6036,7 +6059,7 @@ name = "standard-sunau"
 version = "3.13.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "audioop-lts", marker = "python_full_version >= '3.13' and sys_platform == 'linux'" },
+    { name = "audioop-lts", marker = "python_full_version == '3.13.*' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/66/e3/ce8d38cb2d70e05ffeddc28bb09bad77cfef979eb0a299c9117f7ed4e6a9/standard_sunau-3.13.0.tar.gz", hash = "sha256:b319a1ac95a09a2378a8442f403c66f4fd4b36616d6df6ae82b8e536ee790908", size = 9368, upload-time = "2024-10-30T16:01:41.626Z" }
 wheels = [
@@ -6048,7 +6071,7 @@ name = "starlette"
 version = "0.52.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "anyio", marker = "sys_platform == 'linux'" },
+    { name = "anyio", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
     { name = "typing-extensions", marker = "python_full_version < '3.13' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c4/68/79977123bb7be889ad680d79a40f339082c1978b5cfcf62c2d8d196873ac/starlette-0.52.1.tar.gz", hash = "sha256:834edd1b0a23167694292e94f597773bc3f89f362be6effee198165a35d62933", size = 2653702, upload-time = "2026-01-18T13:34:11.062Z" }
@@ -6071,6 +6094,9 @@ version = "0.1.0"
 source = { virtual = "." }
 
 [package.dev-dependencies]
+dev = [
+    { name = "ruff", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32' or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+]
 main = [
     { name = "datasets", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
     { name = "einops", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
@@ -6087,6 +6113,8 @@ main = [
     { name = "tokenizers", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
     { name = "torch", version = "2.12.0.dev20260415", source = { registry = "https://download.pytorch.org/whl/nightly/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
     { name = "torch", version = "2.12.0.dev20260415+cu126", source = { registry = "https://download.pytorch.org/whl/nightly/cu126" }, marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "torchcodec", version = "0.12.0.dev20260423", source = { registry = "https://download.pytorch.org/whl/nightly/cpu" }, marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "torchcodec", version = "0.12.0.dev20260423+cpu", source = { registry = "https://download.pytorch.org/whl/nightly/cpu" }, marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
     { name = "tqdm", marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
     { name = "transformers", version = "5.5.4", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'darwin' or sys_platform == 'linux' or sys_platform == 'win32'" },
     { name = "triton", version = "3.7.0+gitb4e20bbe", source = { registry = "https://download.pytorch.org/whl/nightly/cu126" }, marker = "sys_platform == 'linux'" },
@@ -6109,6 +6137,7 @@ transcribe = [
     { name = "pyyaml", marker = "(python_full_version < '3.14' and sys_platform == 'darwin') or (python_full_version < '3.14' and sys_platform == 'linux') or (python_full_version < '3.14' and sys_platform == 'win32')" },
     { name = "qwen-asr", extra = ["vllm"], marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
     { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "torchcodec", version = "0.9.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
     { name = "tqdm", marker = "(python_full_version < '3.14' and sys_platform == 'darwin') or (python_full_version < '3.14' and sys_platform == 'linux') or (python_full_version < '3.14' and sys_platform == 'win32')" },
     { name = "triton", version = "3.5.1", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
@@ -6116,6 +6145,7 @@ transcribe = [
 [package.metadata]
 
 [package.metadata.requires-dev]
+dev = [{ name = "ruff" }]
 main = [
     { name = "datasets" },
     { name = "einops", specifier = "==0.8.2" },
@@ -6132,6 +6162,8 @@ main = [
     { name = "torch", marker = "sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32'", specifier = ">=2.12.0.dev0,<2.13" },
     { name = "torch", marker = "sys_platform == 'darwin'", specifier = ">=2.12.0.dev0,<2.13", index = "https://download.pytorch.org/whl/nightly/cpu", conflict = { package = "suspiria-asr", group = "main" } },
     { name = "torch", marker = "sys_platform == 'linux' or sys_platform == 'win32'", specifier = ">=2.12.0.dev0,<2.13", index = "https://download.pytorch.org/whl/nightly/cu126", conflict = { package = "suspiria-asr", group = "main" } },
+    { name = "torchcodec", marker = "sys_platform == 'darwin'", index = "https://download.pytorch.org/whl/nightly/cpu", conflict = { package = "suspiria-asr", group = "main" } },
+    { name = "torchcodec", marker = "sys_platform == 'linux'", index = "https://download.pytorch.org/whl/nightly/cpu", conflict = { package = "suspiria-asr", group = "main" } },
     { name = "tqdm", specifier = "==4.67.3" },
     { name = "transformers", specifier = "==5.5.4" },
     { name = "triton", marker = "sys_platform == 'linux'", index = "https://download.pytorch.org/whl/nightly/cu126", conflict = { package = "suspiria-asr", group = "main" } },
@@ -6154,6 +6186,7 @@ transcribe = [
     { name = "pyyaml", marker = "python_full_version >= '3.10' and python_full_version < '3.14'", specifier = "==6.0.3" },
     { name = "qwen-asr", extras = ["vllm"], marker = "python_full_version >= '3.10' and python_full_version < '3.14' and sys_platform == 'linux'" },
     { name = "torch", marker = "python_full_version >= '3.10' and python_full_version < '3.14' and sys_platform == 'linux'", specifier = "==2.9.1", index = "https://download.pytorch.org/whl/cu126", conflict = { package = "suspiria-asr", group = "transcribe" } },
+    { name = "torchcodec", marker = "python_full_version >= '3.10' and python_full_version < '3.14' and sys_platform == 'linux'", specifier = ">=0.9,<0.10" },
     { name = "tqdm", marker = "python_full_version >= '3.10' and python_full_version < '3.14'", specifier = "==4.67.3" },
     { name = "triton", marker = "python_full_version >= '3.10' and python_full_version < '3.14' and sys_platform == 'linux'", index = "https://download.pytorch.org/whl/cu126", conflict = { package = "suspiria-asr", group = "transcribe" } },
 ]
@@ -6163,7 +6196,7 @@ name = "sympy"
 version = "1.14.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "mpmath", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "mpmath", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/83/d3/803453b36afefb7c2bb238361cd4ae6125a569b4db67cd9e79846ba2d68c/sympy-1.14.0.tar.gz", hash = "sha256:d3d3fe8df1e5a0b42f0e7bdf50541697dbe7d23746e894990c030e2b05e72517", size = 7793921, upload-time = "2025-04-27T18:05:01.611Z" }
 wheels = [
@@ -6193,8 +6226,8 @@ name = "tiktoken"
 version = "0.12.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "regex", marker = "sys_platform == 'linux'" },
-    { name = "requests", marker = "sys_platform == 'linux'" },
+    { name = "regex", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "requests", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7d/ab/4d017d0f76ec3171d469d80fc03dfbb4e48a4bcaddaa831b31d526f05edc/tiktoken-0.12.0.tar.gz", hash = "sha256:b18ba7ee2b093863978fcb14f74b3707cdc8d4d4d3836853ce7ec60772139931", size = 37806, upload-time = "2025-10-06T20:22:45.419Z" }
 wheels = [
@@ -6254,7 +6287,7 @@ name = "tokenizers"
 version = "0.22.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "huggingface-hub", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "huggingface-hub", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
     { name = "huggingface-hub", version = "1.11.0", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/73/6f/f80cfef4a312e1fb34baf7d85c72d4411afde10978d4657f8cdd811d3ccc/tokenizers-0.22.2.tar.gz", hash = "sha256:473b83b915e547aa366d1eee11806deaf419e17be16310ac0a14077f1e28f917", size = 372115, upload-time = "2026-01-05T10:45:15.988Z" }
@@ -6354,30 +6387,30 @@ resolution-markers = [
     "python_full_version < '3.11' and sys_platform == 'linux'",
 ]
 dependencies = [
-    { name = "filelock", marker = "sys_platform == 'linux'" },
-    { name = "fsspec", marker = "sys_platform == 'linux'" },
-    { name = "jinja2", marker = "sys_platform == 'linux'" },
+    { name = "filelock", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "fsspec", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "jinja2", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
     { name = "networkx", version = "3.4.2", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version < '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "networkx", version = "3.6.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.11' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "nvidia-cublas-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-cuda-cupti-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-cuda-nvrtc-cu12", version = "12.6.77", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
-    { name = "nvidia-cuda-runtime-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-cudnn-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-cufft-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-cufile-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-curand-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-cusolver-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-cusparse-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-cusparselt-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-nccl-cu12", version = "2.27.5", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
-    { name = "nvidia-nvjitlink-cu12", marker = "sys_platform == 'linux'" },
-    { name = "nvidia-nvshmem-cu12", version = "3.3.20", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
-    { name = "nvidia-nvtx-cu12", marker = "sys_platform == 'linux'" },
-    { name = "setuptools", version = "80.10.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12' and sys_platform == 'linux'" },
-    { name = "sympy", marker = "sys_platform == 'linux'" },
-    { name = "triton", version = "3.5.1", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
+    { name = "networkx", version = "3.6.1", source = { registry = "https://pypi.org/simple" }, marker = "(python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version < '3.11' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "nvidia-cublas-cu12", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-cuda-cupti-cu12", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-cuda-nvrtc-cu12", version = "12.6.77", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-cuda-runtime-cu12", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-cudnn-cu12", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-cufft-cu12", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-cufile-cu12", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-curand-cu12", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-cusolver-cu12", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-cusparse-cu12", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-cusparselt-cu12", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-nccl-cu12", version = "2.27.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-nvjitlink-cu12", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-nvshmem-cu12", version = "3.3.20", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "nvidia-nvtx-cu12", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "setuptools", version = "80.10.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "sympy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "triton", version = "3.5.1", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://download-r2.pytorch.org/whl/cu126/torch-2.9.1%2Bcu126-cp310-cp310-manylinux_2_28_aarch64.whl", hash = "sha256:472da048ab936302ee0dec3bedea16e697ecb41d51bd341142aca2677466f436", upload-time = "2026-01-26T16:43:13Z" },
@@ -6491,7 +6524,7 @@ name = "torchaudio"
 version = "2.9.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "sys_platform == 'linux'" },
+    { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/1c/87/7de58c8f4c1946ec4d9070354eae73d1e4f3d2426e5cfa45febbd8451ce5/torchaudio-2.9.1-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:fd13541197e035338bd43225b2067532056486d357c661e12d49ace4fc37f8bb", size = 805912, upload-time = "2025-11-12T15:25:47.857Z" },
@@ -6525,13 +6558,83 @@ wheels = [
 ]
 
 [[package]]
+name = "torchcodec"
+version = "0.9.1"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version == '3.13.*' and sys_platform == 'linux'",
+    "python_full_version == '3.12.*' and sys_platform == 'linux'",
+    "python_full_version == '3.11.*' and sys_platform == 'linux'",
+    "python_full_version < '3.11' and sys_platform == 'linux'",
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4a/c3/ae904a2a8cb4b6288684f022a6d5061a74435bc2d6f1c4742c16d441a9ee/torchcodec-0.9.1-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:72738d7870edbcd6982207609efe314352e0bf90f4e3895a549e23a49ee0673c", size = 3397284, upload-time = "2025-12-10T15:55:45.498Z" },
+    { url = "https://files.pythonhosted.org/packages/30/96/c693d75e32b4f07828c2b8a4b894be7366d0e46366ff10dad5825d891148/torchcodec-0.9.1-cp310-cp310-manylinux_2_28_x86_64.whl", hash = "sha256:53dfecabc843e4d78b77453732129bd8572dd9d022ab81a94f5305cd5e920ded", size = 2043848, upload-time = "2025-12-10T15:55:25.772Z" },
+    { url = "https://files.pythonhosted.org/packages/68/dd/cbda16eb33d380c3e7b3cb6dbcfa59aa21e676ddebe3627e834be3b1c124/torchcodec-0.9.1-cp310-cp310-win_amd64.whl", hash = "sha256:d5267e6112b0d0b948d653dc3ffa486bb9a01febc81606d3dfd75cf5a4dcc9f3", size = 2170387, upload-time = "2025-12-10T15:56:09.824Z" },
+    { url = "https://files.pythonhosted.org/packages/c0/37/169238bb55017b08a93530d6f4474a112780df4c05c26c78df7dd58401f1/torchcodec-0.9.1-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:7a81d29e67cebefaec08f9c817635d1ff47205814884e527ef4b135a6c795612", size = 3899002, upload-time = "2025-12-10T15:55:49.911Z" },
+    { url = "https://files.pythonhosted.org/packages/75/74/11c59e0592e555df78cfee2fd4b8ba5c725e4bf160002af88ce09de99d9d/torchcodec-0.9.1-cp311-cp311-manylinux_2_28_x86_64.whl", hash = "sha256:5e959c7abf95de62f78653d416f00f7ca32936fbfd23371b23d5c8dc199f3670", size = 2048262, upload-time = "2025-12-10T15:55:29.552Z" },
+    { url = "https://files.pythonhosted.org/packages/53/66/0612c7852cb7854dec45db9357397b4dbd4d6274832cc8949a8d1c0e518a/torchcodec-0.9.1-cp311-cp311-win_amd64.whl", hash = "sha256:508e0ce6da1e4af186b131cdbdd3d998bc4313e9f3a3f5b78f64aa5f9685ed88", size = 2181959, upload-time = "2025-12-10T15:56:13.191Z" },
+    { url = "https://files.pythonhosted.org/packages/4b/60/3bfa459e09987af08e188811b191437c9d8215a74f4d418be6ff7df87b5c/torchcodec-0.9.1-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:8996ec62b72c69545c30246df64df386d06d7ec7de0689be5d20dfc06aad6442", size = 4064264, upload-time = "2025-12-10T15:55:56.313Z" },
+    { url = "https://files.pythonhosted.org/packages/17/c8/bfb74babec98aff11ab4f239b0901f39e1a93338b3438e842d864dc46935/torchcodec-0.9.1-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:a50568ce73b70395d113833fb07394c223f5546ef5d4fafe0fdcd91627fca270", size = 2061978, upload-time = "2025-12-10T15:55:33.415Z" },
+    { url = "https://files.pythonhosted.org/packages/b2/12/c0bbf01b0ed52b69aaeed4af1043dc8308ccc522a47fcc082b34882e2ba2/torchcodec-0.9.1-cp312-cp312-win_amd64.whl", hash = "sha256:d9c8efe5845bde45a428f96493b4a041511f47f5bd53b333a0ad90426be4623a", size = 2187178, upload-time = "2025-12-10T15:56:16.968Z" },
+    { url = "https://files.pythonhosted.org/packages/6f/c7/67fc8417f9efa8a25c00a44f0d674761a0bad9c45e9725e3fd116b3c48ed/torchcodec-0.9.1-cp313-cp313-macosx_12_0_arm64.whl", hash = "sha256:5c9cdcba50c75be70ef6ec919ec1f7f14d9d5163d93cf6bd94403e134f03734c", size = 4034415, upload-time = "2025-12-10T15:56:02.04Z" },
+    { url = "https://files.pythonhosted.org/packages/68/05/06240f661e9aa08b20765305e3b88f60bff706bbe54ac35830af74612443/torchcodec-0.9.1-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:0643c5e9c3a51fdafdea87935d5b0a38e99626c664f47a150482d77ab370a877", size = 2067767, upload-time = "2025-12-10T15:55:37.27Z" },
+    { url = "https://files.pythonhosted.org/packages/13/a2/d78cd65863fb805d9e35fe90ae7574eab86ff0ae63438208bd07d2cf1fd2/torchcodec-0.9.1-cp313-cp313-win_amd64.whl", hash = "sha256:df0b5a15998fd7457625c2af2a6276e0e710fac158d145045340dbbcd1cfdb65", size = 2186788, upload-time = "2025-12-10T15:56:20.204Z" },
+    { url = "https://files.pythonhosted.org/packages/01/02/f8ae9443d3bcbe8a8d6d0bbc3992296e5476e5afa1f244100a3a7967a36c/torchcodec-0.9.1-cp314-cp314-macosx_11_0_arm64.whl", hash = "sha256:b9bc5a5dff925df96d11bf90bd0ce964b8086bb11ae09adf353518192b5da483", size = 3812248, upload-time = "2025-12-10T15:56:06.382Z" },
+    { url = "https://files.pythonhosted.org/packages/59/a1/8462b55571286847ea31edb7634583125400824267db9ba8301f4ce3f137/torchcodec-0.9.1-cp314-cp314-manylinux_2_28_x86_64.whl", hash = "sha256:65634bb28b3155cf99f980dac31ecedb414c07b8156f8473ec9fb74bedbd2a1f", size = 2068456, upload-time = "2025-12-10T15:55:40.577Z" },
+    { url = "https://files.pythonhosted.org/packages/f2/63/752d0fc1c6e8f799ae880ca1087510def663a7f9aa1a70074ae334c6908f/torchcodec-0.9.1-cp314-cp314-win_amd64.whl", hash = "sha256:2d01c8b3685a3a38f050ed2b526808a2938dba6f56cb9f9e967884fd858bba15", size = 2188320, upload-time = "2025-12-10T15:56:24.63Z" },
+]
+
+[[package]]
+name = "torchcodec"
+version = "0.12.0.dev20260423"
+source = { registry = "https://download.pytorch.org/whl/nightly/cpu" }
+resolution-markers = [
+    "python_full_version >= '3.14' and sys_platform == 'darwin'",
+    "python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform == 'darwin'",
+    "python_full_version < '3.11' and sys_platform == 'darwin'",
+]
+wheels = [
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423-cp310-cp310-macosx_14_0_arm64.whl", upload-time = "2026-04-23T12:01:08Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423-cp311-cp311-macosx_14_0_arm64.whl", upload-time = "2026-04-23T12:01:07Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423-cp312-cp312-macosx_14_0_arm64.whl", upload-time = "2026-04-23T12:01:12Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423-cp313-cp313-macosx_14_0_arm64.whl", upload-time = "2026-04-23T12:01:14Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423-cp313-cp313t-macosx_14_0_arm64.whl", upload-time = "2026-04-23T12:01:08Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423-cp314-cp314-macosx_14_0_arm64.whl", upload-time = "2026-04-23T12:01:08Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423-cp314-cp314t-macosx_14_0_arm64.whl", upload-time = "2026-04-23T12:01:12Z" },
+]
+
+[[package]]
+name = "torchcodec"
+version = "0.12.0.dev20260423+cpu"
+source = { registry = "https://download.pytorch.org/whl/nightly/cpu" }
+resolution-markers = [
+    "python_full_version >= '3.14' and sys_platform == 'linux'",
+    "python_full_version >= '3.11' and python_full_version < '3.14' and sys_platform == 'linux'",
+    "python_full_version < '3.11' and sys_platform == 'linux'",
+]
+wheels = [
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423%2Bcpu-cp310-cp310-manylinux_2_28_x86_64.whl", upload-time = "2026-04-23T12:06:12Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423%2Bcpu-cp310-cp310-win_amd64.whl", upload-time = "2026-04-23T12:14:26Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423%2Bcpu-cp311-cp311-manylinux_2_28_x86_64.whl", upload-time = "2026-04-23T12:06:09Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423%2Bcpu-cp311-cp311-win_amd64.whl", upload-time = "2026-04-23T12:14:13Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423%2Bcpu-cp312-cp312-manylinux_2_28_x86_64.whl", upload-time = "2026-04-23T12:06:11Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423%2Bcpu-cp312-cp312-win_amd64.whl", upload-time = "2026-04-23T12:14:20Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423%2Bcpu-cp313-cp313-manylinux_2_28_x86_64.whl", upload-time = "2026-04-23T12:06:18Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423%2Bcpu-cp313-cp313-win_amd64.whl", upload-time = "2026-04-23T12:14:13Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423%2Bcpu-cp313-cp313t-manylinux_2_28_x86_64.whl", upload-time = "2026-04-23T12:06:17Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423%2Bcpu-cp314-cp314-manylinux_2_28_x86_64.whl", upload-time = "2026-04-23T12:06:13Z" },
+    { url = "https://download.pytorch.org/whl/nightly/cpu/torchcodec-0.12.0.dev20260423%2Bcpu-cp314-cp314t-manylinux_2_28_x86_64.whl", upload-time = "2026-04-23T12:06:09Z" },
+]
+
+[[package]]
 name = "torchvision"
 version = "0.24.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy", marker = "sys_platform == 'linux'" },
-    { name = "pillow", marker = "sys_platform == 'linux'" },
-    { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pillow", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f7/09/d51aadf8591138e08b74c64a6eb783630c7a31ca2634416277115a9c3a2b/torchvision-0.24.1-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:ded5e625788572e4e1c4d155d1bbc48805c113794100d70e19c76e39e4d53465", size = 1891441, upload-time = "2025-11-12T15:25:01.687Z" },
@@ -6587,16 +6690,16 @@ resolution-markers = [
     "python_full_version < '3.11' and sys_platform == 'linux'",
 ]
 dependencies = [
-    { name = "filelock", marker = "sys_platform == 'linux'" },
-    { name = "huggingface-hub", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
-    { name = "numpy", marker = "sys_platform == 'linux'" },
-    { name = "packaging", marker = "sys_platform == 'linux'" },
-    { name = "pyyaml", marker = "sys_platform == 'linux'" },
-    { name = "regex", marker = "sys_platform == 'linux'" },
-    { name = "requests", marker = "sys_platform == 'linux'" },
-    { name = "safetensors", marker = "sys_platform == 'linux'" },
-    { name = "tokenizers", marker = "sys_platform == 'linux'" },
-    { name = "tqdm", marker = "sys_platform == 'linux'" },
+    { name = "filelock", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "huggingface-hub", version = "0.36.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "packaging", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pyyaml", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "regex", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "requests", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "safetensors", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "tokenizers", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "tqdm", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c4/35/67252acc1b929dc88b6602e8c4a982e64f31e733b804c14bc24b47da35e6/transformers-4.57.6.tar.gz", hash = "sha256:55e44126ece9dc0a291521b7e5492b572e6ef2766338a610b9ab5afbb70689d3", size = 10134912, upload-time = "2026-01-16T10:38:39.284Z" }
 wheels = [
@@ -6716,7 +6819,7 @@ name = "typing-inspection"
 version = "0.4.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "(sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "typing-extensions", marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform == 'darwin' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'win32' and extra == 'group-12-suspiria-asr-main') or (sys_platform == 'linux' and extra == 'group-12-suspiria-asr-main') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/55/e3/70399cb7dd41c10ac53367ae42139cf4b1ca5f36bb3dc6c9d33acdb43655/typing_inspection-0.4.2.tar.gz", hash = "sha256:ba561c48a67c5958007083d386c3295464928b01faa735ab8547c5692e87f464", size = 75949, upload-time = "2025-10-01T02:14:41.687Z" }
 wheels = [
@@ -6746,8 +6849,8 @@ name = "uvicorn"
 version = "0.46.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click", marker = "sys_platform == 'linux'" },
-    { name = "h11", marker = "sys_platform == 'linux'" },
+    { name = "click", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "h11", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
     { name = "typing-extensions", marker = "python_full_version < '3.11' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1f/93/041fca8274050e40e6791f267d82e0e2e27dd165627bd640d3e0e378d877/uvicorn-0.46.0.tar.gz", hash = "sha256:fb9da0926999cc6cb22dc7cd71a94a632f078e6ae47ff683c5c420750fb7413d", size = 88758, upload-time = "2026-04-23T07:16:00.151Z" }
@@ -6757,12 +6860,12 @@ wheels = [
 
 [package.optional-dependencies]
 standard = [
-    { name = "httptools", marker = "sys_platform == 'linux'" },
-    { name = "python-dotenv", marker = "sys_platform == 'linux'" },
-    { name = "pyyaml", marker = "sys_platform == 'linux'" },
-    { name = "uvloop", marker = "platform_python_implementation != 'PyPy' and sys_platform == 'linux'" },
-    { name = "watchfiles", marker = "sys_platform == 'linux'" },
-    { name = "websockets", marker = "sys_platform == 'linux'" },
+    { name = "httptools", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "python-dotenv", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pyyaml", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "uvloop", marker = "python_full_version < '3.14' and platform_python_implementation != 'PyPy' and sys_platform == 'linux'" },
+    { name = "watchfiles", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "websockets", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 
 [[package]]
@@ -6814,66 +6917,66 @@ name = "vllm"
 version = "0.14.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "aiohttp", marker = "sys_platform == 'linux'" },
-    { name = "anthropic", marker = "sys_platform == 'linux'" },
-    { name = "blake3", marker = "sys_platform == 'linux'" },
-    { name = "cachetools", marker = "sys_platform == 'linux'" },
-    { name = "cbor2", marker = "sys_platform == 'linux'" },
-    { name = "cloudpickle", marker = "sys_platform == 'linux'" },
-    { name = "compressed-tensors", marker = "sys_platform == 'linux'" },
-    { name = "depyf", marker = "sys_platform == 'linux'" },
-    { name = "diskcache", marker = "sys_platform == 'linux'" },
-    { name = "einops", marker = "sys_platform == 'linux'" },
-    { name = "fastapi", extra = ["standard"], marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "filelock", marker = "sys_platform == 'linux'" },
-    { name = "flashinfer-python", marker = "sys_platform == 'linux'" },
-    { name = "gguf", marker = "sys_platform == 'linux'" },
-    { name = "grpcio", marker = "sys_platform == 'linux'" },
-    { name = "grpcio-reflection", marker = "sys_platform == 'linux'" },
-    { name = "ijson", marker = "sys_platform == 'linux'" },
-    { name = "lark", marker = "sys_platform == 'linux'" },
-    { name = "llguidance", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'arm64' and sys_platform == 'linux') or (platform_machine == 'ppc64le' and sys_platform == 'linux') or (platform_machine == 's390x' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
-    { name = "lm-format-enforcer", marker = "sys_platform == 'linux'" },
-    { name = "mcp", marker = "sys_platform == 'linux'" },
-    { name = "mistral-common", extra = ["image"], marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "model-hosting-container-standards", marker = "sys_platform == 'linux'" },
-    { name = "msgspec", marker = "sys_platform == 'linux'" },
-    { name = "ninja", marker = "sys_platform == 'linux'" },
-    { name = "numba", marker = "sys_platform == 'linux'" },
-    { name = "numpy", marker = "sys_platform == 'linux'" },
-    { name = "openai", marker = "sys_platform == 'linux'" },
-    { name = "openai-harmony", marker = "sys_platform == 'linux'" },
-    { name = "opencv-python-headless", marker = "sys_platform == 'linux'" },
-    { name = "outlines-core", marker = "sys_platform == 'linux'" },
-    { name = "partial-json-parser", marker = "sys_platform == 'linux'" },
-    { name = "pillow", marker = "sys_platform == 'linux'" },
-    { name = "prometheus-client", marker = "sys_platform == 'linux'" },
-    { name = "prometheus-fastapi-instrumentator", marker = "sys_platform == 'linux'" },
-    { name = "protobuf", version = "6.33.6", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
-    { name = "psutil", marker = "sys_platform == 'linux'" },
-    { name = "py-cpuinfo", marker = "sys_platform == 'linux'" },
-    { name = "pybase64", marker = "sys_platform == 'linux'" },
-    { name = "pydantic", marker = "sys_platform == 'linux'" },
-    { name = "python-json-logger", marker = "sys_platform == 'linux'" },
-    { name = "pyyaml", marker = "sys_platform == 'linux'" },
-    { name = "pyzmq", marker = "sys_platform == 'linux'" },
-    { name = "ray", extra = ["cgraph"], marker = "(sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
-    { name = "regex", marker = "sys_platform == 'linux'" },
-    { name = "requests", marker = "sys_platform == 'linux'" },
-    { name = "sentencepiece", marker = "sys_platform == 'linux'" },
-    { name = "setproctitle", marker = "sys_platform == 'linux'" },
-    { name = "setuptools", version = "80.10.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12' and sys_platform == 'linux'" },
-    { name = "six", marker = "python_full_version >= '3.12' and sys_platform == 'linux'" },
-    { name = "tiktoken", marker = "sys_platform == 'linux'" },
-    { name = "tokenizers", marker = "sys_platform == 'linux'" },
-    { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "sys_platform == 'linux'" },
-    { name = "torchaudio", marker = "sys_platform == 'linux'" },
-    { name = "torchvision", marker = "sys_platform == 'linux'" },
-    { name = "tqdm", marker = "sys_platform == 'linux'" },
-    { name = "transformers", version = "4.57.6", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
-    { name = "watchfiles", marker = "sys_platform == 'linux'" },
-    { name = "xgrammar", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'arm64' and sys_platform == 'linux') or (platform_machine == 'ppc64le' and sys_platform == 'linux') or (platform_machine == 's390x' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
+    { name = "aiohttp", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "anthropic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "blake3", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "cachetools", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "cbor2", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "cloudpickle", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "compressed-tensors", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "depyf", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "diskcache", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "einops", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "fastapi", extra = ["standard"], marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "filelock", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "flashinfer-python", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "gguf", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "grpcio", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "grpcio-reflection", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "ijson", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "lark", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "llguidance", marker = "(python_full_version < '3.14' and platform_machine == 'aarch64' and sys_platform == 'linux') or (python_full_version < '3.14' and platform_machine == 'arm64' and sys_platform == 'linux') or (python_full_version < '3.14' and platform_machine == 'ppc64le' and sys_platform == 'linux') or (python_full_version < '3.14' and platform_machine == 's390x' and sys_platform == 'linux') or (python_full_version < '3.14' and platform_machine == 'x86_64' and sys_platform == 'linux')" },
+    { name = "lm-format-enforcer", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "mcp", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "mistral-common", extra = ["image"], marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "model-hosting-container-standards", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "msgspec", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "ninja", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numba", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "openai", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "openai-harmony", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "opencv-python-headless", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "outlines-core", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "partial-json-parser", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pillow", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "prometheus-client", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "prometheus-fastapi-instrumentator", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "protobuf", version = "6.33.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "psutil", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "py-cpuinfo", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pybase64", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "python-json-logger", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pyyaml", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pyzmq", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "ray", extra = ["cgraph"], marker = "(python_full_version < '3.14' and sys_platform == 'linux' and extra == 'group-12-suspiria-asr-transcribe') or (python_full_version >= '3.14' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe') or (sys_platform != 'linux' and extra == 'group-12-suspiria-asr-main' and extra == 'group-12-suspiria-asr-transcribe')" },
+    { name = "regex", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "requests", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "sentencepiece", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "setproctitle", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "setuptools", version = "80.10.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "six", marker = "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "tiktoken", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "tokenizers", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "torchaudio", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "torchvision", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "tqdm", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "transformers", version = "4.57.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "watchfiles", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "xgrammar", marker = "(python_full_version < '3.14' and platform_machine == 'aarch64' and sys_platform == 'linux') or (python_full_version < '3.14' and platform_machine == 'arm64' and sys_platform == 'linux') or (python_full_version < '3.14' and platform_machine == 'ppc64le' and sys_platform == 'linux') or (python_full_version < '3.14' and platform_machine == 's390x' and sys_platform == 'linux') or (python_full_version < '3.14' and platform_machine == 'x86_64' and sys_platform == 'linux')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/01/fd/abb7391e8cb5cb729ae770946b4f61b9e9b56bac8805e7baeaed651378d5/vllm-0.14.0.tar.gz", hash = "sha256:ed86c6a9d22fbfd059648794493cad88444c71688f3ff6efcb26c5ca353f0e5d", size = 19690728, upload-time = "2026-01-20T10:55:03.658Z" }
 wheels = [
@@ -6916,7 +7019,7 @@ name = "watchfiles"
 version = "1.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "anyio", marker = "sys_platform == 'linux'" },
+    { name = "anyio", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c2/c9/8869df9b2a2d6c59d79220a4db37679e74f807c559ffe5265e08b227a210/watchfiles-1.1.1.tar.gz", hash = "sha256:a173cb5c16c4f40ab19cecf48a534c409f7ea983ab8fed0741304a1c0a31b3f2", size = 94440, upload-time = "2025-10-14T15:06:21.08Z" }
 wheels = [
@@ -7087,7 +7190,7 @@ name = "werkzeug"
 version = "3.1.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markupsafe", marker = "sys_platform == 'linux'" },
+    { name = "markupsafe", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/dd/b2/381be8cfdee792dd117872481b6e378f85c957dd7c5bca38897b08f765fd/werkzeug-3.1.8.tar.gz", hash = "sha256:9bad61a4268dac112f1c5cd4630a56ede601b6ed420300677a869083d70a4c44", size = 875852, upload-time = "2026-04-02T18:49:14.268Z" }
 wheels = [
@@ -7099,12 +7202,12 @@ name = "xgrammar"
 version = "0.1.29"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "numpy", marker = "sys_platform == 'linux'" },
-    { name = "pydantic", marker = "sys_platform == 'linux'" },
-    { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "sys_platform == 'linux'" },
-    { name = "transformers", version = "4.57.6", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform == 'linux'" },
-    { name = "triton", version = "3.5.1", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "platform_machine == 'x86_64' and sys_platform == 'linux'" },
-    { name = "typing-extensions", marker = "sys_platform == 'linux'" },
+    { name = "numpy", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "pydantic", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "torch", version = "2.9.1+cu126", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "transformers", version = "4.57.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
+    { name = "triton", version = "3.5.1", source = { registry = "https://download.pytorch.org/whl/cu126" }, marker = "python_full_version < '3.14' and platform_machine == 'x86_64' and sys_platform == 'linux'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' and sys_platform == 'linux'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/02/a3/70dbe3ffd331a1e7e1ad5a95690a4086e6c7cdb8089f5c7eda712219ccec/xgrammar-0.1.29.tar.gz", hash = "sha256:cf195afa81b489eebf35d4c6f37f27136d05420739ab4a6f7f065c938d7e4baa", size = 2321317, upload-time = "2025-12-19T08:23:54.53Z" }
 wheels = [

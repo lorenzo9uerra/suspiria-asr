@@ -60,14 +60,14 @@ uv sync --only-group transcribe
 
 The transcription environment is separated into its own dependency group because `qwen-asr[vllm]` currently pins a different `transformers`, `huggingface-hub`, and `torch` stack than the rest of the repo.
 
-The `transcribe` group is currently intended for Linux environments. Upstream `qwen-asr[vllm]` pulls `flashinfer`/CUDA dependencies that do not currently resolve from wheels on macOS or Windows.
+The `transcribe` group is currently intended for GPU-only on Linux environments.
 
 The default `main` group installs PyTorch from the official nightly indexes: CUDA 12.6 nightlies on Linux and Windows, and CPU nightlies on macOS. The `transcribe` group follows the stable `qwen-asr[vllm]`-compatible torch line instead. If you need a different PyTorch build, update the `torch` requirement and `[tool.uv.sources]` entry in `pyproject.toml` before syncing.
 
 Authenticate with Hugging Face if you use private repos:
 
 ```bash
-huggingface-cli login
+hf auth login
 ```
 
 The code assumes commands are run from the repository root:
@@ -102,7 +102,7 @@ Install the transcription dependency first:
 uv sync --only-group transcribe
 ```
 
-This transcription environment is currently supported on Linux only.
+This transcription environment is currently supported only on Linux with a CUDA-capable NVIDIA GPU.
 
 Edit:
 
