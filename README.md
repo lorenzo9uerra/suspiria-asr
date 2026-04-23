@@ -18,6 +18,12 @@ The model is composed of a frozen Mimi variational audio encoder used without RV
 
 The model architecture is compatible with streaming inference. In practice, however, robust streaming operation requires training on audio sequences longer than the decoder context window, so that the model learns to operate with truncated historical context. Since the current dataset consists of shorter utterances, approximately 30-second clips, the provided inference workflow is currently intended for offline transcription of fixed-length audio segments.
 
+## Available Models
+
+| Language | Parameters | WER | Hugging Face | Weights & Biases |
+|---|---:|---:|---|---|
+| Italian | 250M | 11.0% | [HF](https://huggingface.co/3podi/suspiria-asr-ita) | [W&B](https://wandb.ai/3posi/suspiria-asr/reports/Suspiria-ASR-ITA--VmlldzoxNjY0NDAyOA) |
+
 ## Quick Inference Example
 
 To run the trained ASR stack on the sample audio file:
