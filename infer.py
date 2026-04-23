@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import argparse
 from pathlib import Path
 from typing import Any
 import wave
 
+import hydra
 import numpy as np
 import safetensors.torch
 import torch
 from huggingface_hub import hf_hub_download
-from omegaconf import OmegaConf
+from hydra.utils import to_absolute_path
+from omegaconf import DictConfig, OmegaConf
 from scipy.signal import resample_poly
 
 from preprocessing.encode_latents import load_mimi_encoder
@@ -21,15 +22,9 @@ from training.utils.model_builder import build_model
 from training.utils.wer import generate_batch_greedy
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Simple offline ASR inference for one audio file.")
-    parser.add_argument("--config", default="configs/inference/offline-ita.yaml", help="Self-contained inference YAML config.")
-    return parser.parse_args()
-
-
 def resolve_weight_path(path_or_hf: str | Path) -> str:
     value = str(path_or_hf)
-    local_path = Path(value).expanduser()
+    local_path = Path(to_absolute_path(str(Path(value).expanduser())))
     if local_path.exists():
         return str(local_path.resolve())
     if value.startswith("hf://"):
@@ -52,24 +47,8 @@ def download_hf_path(hf_path: str) -> Path:
     return Path(hf_hub_download(repo_id=repo_id, filename=filename, revision=revision))
 
 
-def load_yaml(path: str | Path) -> dict[str, Any]:
-    cfg = OmegaConf.load(str(Path(path).expanduser()))
-    plain = OmegaConf.to_container(cfg, resolve=True)
-    if not isinstance(plain, dict):
-        raise ValueError(f"Expected mapping config at {path}")
-    return plain
-
-
-def load_inference_config(path: str | Path) -> dict[str, Any]:
-    cfg = OmegaConf.load(str(Path(path).expanduser()))
-    plain = OmegaConf.to_container(cfg, resolve=True)
-    if not isinstance(plain, dict):
-        raise ValueError(f"Expected mapping config at {path}")
-    return plain
-
-
 def read_audio(path: str | Path) -> tuple[torch.Tensor, int]:
-    path = Path(path).expanduser()
+    path = Path(to_absolute_path(str(Path(path).expanduser())))
     if path.suffix.lower() == ".wav":
         with wave.open(str(path), "rb") as wav_file:
             sample_rate = int(wav_file.getframerate())
@@ -163,9 +142,11 @@ def load_decoder_safetensors(decoder: torch.nn.Module, weights_path: str | Path)
         raise RuntimeError(f"Decoder weight mismatch: missing={missing} unexpected={unexpected}")
 
 
-def main() -> None:
-    args = parse_args()
-    infer_cfg = load_inference_config(args.config)
+@hydra.main(version_base=None, config_path="configs/inference", config_name="offline-ita")
+def main(cfg: DictConfig) -> None:
+    infer_cfg = OmegaConf.to_container(cfg, resolve=True)
+    if not isinstance(infer_cfg, dict):
+        raise ValueError("Expected mapping config for inference.")
     audio_path = infer_cfg["audio"]
     tokenizer_path = infer_cfg["tokenizer"]["name"]
     decoder_weights = infer_cfg["decoder"]["weights_path"]
