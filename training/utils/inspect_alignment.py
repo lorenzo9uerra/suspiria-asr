@@ -227,6 +227,75 @@ def render_token(token_id: int, tokenizer, special_tokens: SpecialTokenIds) -> s
     return f"{token} / {decoded!r}"
 
 
+def _escape_md(value: str) -> str:
+    return value.replace("\n", "\\n").replace("|", "\\|")
+
+
+def _render_tokenizer_sequence(text: str, tokenizer) -> tuple[str, str, str, str]:
+    token_ids = tokenizer.encode(text, add_special_tokens=False)
+    tokens = [str(tokenizer.convert_ids_to_tokens(int(token_id))) for token_id in token_ids]
+    decoded = tokenizer.decode(token_ids, skip_special_tokens=True)
+    return repr(text), " ".join(str(int(token_id)) for token_id in token_ids), _escape_md(" ".join(tokens)), repr(decoded)
+
+
+def render_tokenizer_spacing_diagnostics(
+    *,
+    sample: dict[str, Any],
+    token_ids: list[int],
+    tokenizer,
+    special_tokens: SpecialTokenIds,
+    max_words: int = 8,
+) -> str:
+    words = []
+    for item in sample.get("timestamps") or []:
+        text = " ".join(str(item.get("text", "")).strip().split())
+        if text:
+            words.append(text)
+        if len(words) >= max_words:
+            break
+    if not words:
+        words = str(sample["transcription"]).split()[:max_words]
+
+    lines = [
+        "## Tokenizer Spacing Diagnostics",
+        "",
+        "This shows whether the tokenizer distinguishes a word from the same word with a leading space.",
+        "",
+        "| text | token_ids | tokens | decoded |",
+        "|---|---|---|---|",
+    ]
+    for word in words:
+        for text in (word, f" {word}"):
+            rendered_text, ids, tokens, decoded = _render_tokenizer_sequence(text, tokenizer)
+            lines.append(f"| `{_escape_md(rendered_text)}` | `{ids}` | `{tokens}` | `{_escape_md(decoded)}` |")
+
+    text_token_ids = []
+    for token_id in token_ids:
+        token_id = int(token_id)
+        if token_id == special_tokens.eos:
+            break
+        if token_id in {
+            int(special_tokens.bos),
+            int(special_tokens.pad_wait),
+            int(special_tokens.word_start),
+        }:
+            continue
+        text_token_ids.append(token_id)
+
+    lines.extend(
+        [
+            "",
+            "Reference-style decode of inspected target stream after skipping `[BOS]`, `[P]`, `[W]`, and stopping at `[EOS]`:",
+            "",
+            "```text",
+            tokenizer.decode(text_token_ids, skip_special_tokens=True),
+            "```",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
 def audio_region(step: int, *, left_pad_steps: int, real_steps: int) -> tuple[str, str]:
     latent_idx = step - left_pad_steps
     if step < left_pad_steps:
@@ -436,6 +505,18 @@ def build_report(
         )
     else:
         lines.append("- none")
+
+    lines.extend(
+        [
+            "",
+            render_tokenizer_spacing_diagnostics(
+                sample=sample,
+                token_ids=token_ids,
+                tokenizer=tokenizer,
+                special_tokens=special_tokens,
+            ),
+        ]
+    )
 
     lines.extend(
         [
