@@ -7,6 +7,7 @@ from typing import Any
 import wave
 
 import numpy as np
+import safetensors.torch
 import torch
 from huggingface_hub import hf_hub_download
 from omegaconf import OmegaConf
@@ -16,7 +17,7 @@ from preprocessing.encode_latents import load_mimi_encoder
 from training.data.collator import SpecialTokenIds
 from training.tokenizer import load_tokenizer
 from training.utils.config import resolve_device
-from training.utils.model_builder import build_model, load_pretrained_model_weights
+from training.utils.model_builder import build_model
 from training.utils.wer import generate_batch_greedy
 
 
@@ -155,6 +156,13 @@ def build_special_tokens(resolved_tokenizer) -> SpecialTokenIds:
     )
 
 
+def load_decoder_safetensors(decoder: torch.nn.Module, weights_path: str | Path) -> None:
+    state_dict = safetensors.torch.load_file(str(weights_path))
+    missing, unexpected = decoder.load_state_dict(state_dict, strict=True)
+    if missing or unexpected:
+        raise RuntimeError(f"Decoder weight mismatch: missing={missing} unexpected={unexpected}")
+
+
 def main() -> None:
     args = parse_args()
     infer_cfg = load_inference_config(args.config)
@@ -183,13 +191,7 @@ def main() -> None:
         device=device,
         special_tokens=special_tokens,
     )
-    missing, unexpected = load_pretrained_model_weights(
-        decoder,
-        weights_path=resolve_weight_path(decoder_weights),
-        strict=True,
-    )
-    if missing or unexpected:
-        raise RuntimeError(f"Decoder weight mismatch: missing={missing} unexpected={unexpected}")
+    load_decoder_safetensors(decoder, resolve_weight_path(decoder_weights))
     decoder.eval().to(device=device, dtype=torch.bfloat16)
 
     mimi_cfg = dict(infer_cfg["mimi"])
