@@ -43,9 +43,9 @@ mimi:
   sample_rate: 24000
   channels: 1
   frame_rate: 12.5
-  repo_id: null
-  weights_filename: null
-  weights_path: model.safetensors
+  repo_id: "3podi/pocket-tts-complete"
+  weights_filename: "tts_b6369a24_complete.safetensors"
+  weights_path: null
   seanet:
     dimension: 512
     channels: 1
